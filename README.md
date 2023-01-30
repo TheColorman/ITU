@@ -1,0 +1,1 @@
+This repository is meant as a store for all programming related projects I'll be doing at ITU. Each course has its own folder, with subfolders for each week of the course that include things like exercise solutions.
