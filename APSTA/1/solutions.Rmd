@@ -1,0 +1,123 @@
+---
+title: "Exercises Week 01 solutions"
+output: pdf_document
+---
+
+**1.** Let $E$ and $F$ be two events for which one knows that the probability that at least one of them occurs is 3/4. What is the probability that neither $E$ nor $F$ occurs? Hint: use one of DeMorgan's laws: $E^\mathrm{C} \cap F^\mathrm{C} = (E \cup F)^\mathrm{c}$.\
+*Solution:* The probability that that either $E$, $F$ or $E \cup F$ occurs is $\frac{3}{4}$. Therefore, $(E \cup F)^\mathrm{C} = \frac{1}{4}$.
+
+**2.**
+
+a)  Let $A$ and $B$ be two events in a sample space for which $P(A) = 1/3$, $P(B)=1/2$, and $P(A \cup B) = 3/4$. What is $P(A \cap B)$?
+
+    *Solution*:\
+    The intersection of $A$ and $B$ can be calculated by subtracting $A \cup B$ from $A+B$, as $A+B$ contains $A \cap B$ twice, but $A \cup B$ only contains it once.\
+    $$
+    \begin{aligned}
+    P(A \cap B)&=P(A)+P(B)-P(A \cup B) \\
+    &=1/3+1/2-3/4 \\
+    &=1/12
+    \end{aligned}
+    $$
+
+b)  Let $C$ and $D$ be two events for which one knows that $P(C)=0.1$, $P(D)=0.3$, and $P(C \cap D) = 0.05$. What is $P(C^\mathrm{C} \cap D^\mathrm{C})$?
+
+    *Solution:*\
+    DeMorgan's law states that: $A^\mathrm{C}\cap B^\mathrm{C}=(A\cup B)^\mathrm{C}$. Therefore it is first necessary to find $C \cup D$. $C \cup D=C+D-C \cap D$ for the same reason as $a$. Therefore\
+    $$
+    \begin{aligned}
+    P(C^\mathrm{C} \cap D^\mathrm{C})&=P((C \cup D)^\mathrm{C}) \\
+    &=1-(P(C)+P(D)-P(C \cap D)) \\
+    &=1-(0.1+0.3-0.05) \\
+    &=1-0.45 \\
+    &=0.55
+    \end{aligned}
+    $$
+
+**3.** Consider tossing a fair coin for three times.
+
+a)  Write down the sample space $\Omega$.
+
+    *Solution*:\
+    $\Omega=\{HHH,\ HHT,\ HTH,\ HTT,\ THH,\ THT,\ TTH,\ TTT\}$.
+
+Then, write down the set of outcomes and probabilities for the the events
+
+b)  "We throw tails exactly two times",
+
+    *Solution*:\
+    $P(\{HTT,\ THT,\ TTH\})=3/8$
+
+c)  "We throw heads at least twice,
+
+    *Solution*:\
+    $P(\{HHH,\ HHT,\ HTH,\ THH\})=4/8=1/2$
+
+d)  "Both the first and last throws is heads",
+
+    *Solution*:\
+    $P(\{HHH,\ HTH\})=2/8=1/4$
+
+e)  "We get no tails at all".
+
+    *Solution*:\
+    $P(\{HHH\})=1/8$
+
+**4.** Consider rolling a fair die as many times until the first six will turn up. Write down the probability that
+
+a)  it takes exactly three rolls to get the first six.
+
+    *Solution*:\
+    The sample space in three rolls is $\Omega = \{111,\ 112,\ 113,\ 114,\ 115,\ 116,\ 121,\ ...\}$.\
+    Firstly, we need to find the amount of outcomes where 6 is the final number. We can start by modeling this with 2 throws. The first number can be any integer in $[1,5]$, so 5 different outcomes. With another number, there are now 2 numbers that can be integers in $[1,5]$, so there are $5^2$ or $25$ different outcomes.\
+    Now we need to figure out the total number of possible outcomes. Each number can be an integer in $[1,6]$ now, and there are 3 numbers that fall in to this range, thus there are $6^3$ different outcomes, or $216$.\
+    The probability that the last of three rolls is a 6 is therefore $\frac{25}{216}$ or roughly $11.6\%$.
+
+b)  you need to roll the die more than three times to get the first six.
+
+    *Solution*:\
+    First we need to find the probability that you do get a 6 within 3 rolls. To get a six, either the first, second or third roll has to be a six. In all three cases, the other two rolls can be any integer in $[1,5]$, so there are $3\cdot 5^2$ or $75$ different outcomes where 6 is one of the rolls.\
+    This however does not take into account rolls with more than 1 six. With 2 sixes the non-six value can show up in either the first, second or third roll, and be an integer in [1,5], so there are $3\cdot 5=15$ outcomes where this happens. Finally, there is only one possible outcome with 3 sixes. This means the total number of outcomes with at least one six is $75+15+1=91$ different outcomes.\
+    As we learned previously, there are $216$ total outcomes, which means the probability that there was a six within 3 rolls is $\frac{91}{216}\approx 42.1\%$. That means that the probability you need more than 3 rolls is $1-\frac{91}{216}=\frac{125}{216}\approx 57.9\%$.
+
+**5.** Use R as you would use a calculator to find numeric answers to the following expressions
+
+a)  $1 + 2(3+4)$
+
+    *Solution*:
+
+    ```{r}
+      1+2*(3+4)
+    ```
+
+b)  $4^3+3^{2+1}$
+
+    *Solution*:
+
+    ```{r}
+      4^3+3^(2+1)
+    ```
+
+c)  $\sqrt{(4+3)(2+1)}$
+
+    *Solution*:
+
+    ```{r}
+      sqrt((4+3)*(2+1))
+    ```
+
+d)  $\frac{1+2 \cdot 3^4}{5/6-7}$
+
+    *Solution*:
+
+    ```{r}
+    (1+2*3^4)/(5/6-7)
+    ```
+
+e)  $\frac{0.25-0.2}{\sqrt{0.2 \cdot (1-0.2)/100}}$
+
+    *Solution*:
+
+    ```{r}
+    (0.25-0.2)/sqrt(0.2*(1-0.2)/100)
+    ```
