@@ -1,0 +1,34 @@
+---
+title: "Week 01 solutions"
+output: pdf_document
+date: "2023-02-08"
+---
+1. Fish oil.  
+```{r}
+fish_diet <- c(9, 12, 10, 14, 2, 0, 0)
+norm_diet <- c(-6, 0, 1, 2, -3, -4, 2)
+delta <- fish_diet - norm_diet
+t.test(delta)
+```
+
+The p-value is very low (0.01221), which tells us that the probability that random chance lead to the observation is very low.  
+
+2. Solar radiation  
+```{r}
+sun_data <- read.csv('data/SolarRadiationSkinCancer.csv')
+
+# Plot
+plot(sun_data$Year, sun_data$CancerRate, 
+     main="Skin cancer rates per year", 
+     col=factor(sun_data$SunspotActivity),
+     xlab="Year", ylab="Rate of skin cancer"
+)
+
+# Legend
+legend("topleft", 
+       legend=paste(levels(factor(sun_data$SunspotActivity)), 
+       "solar radiation"), 
+       pch=19, 
+       col=factor(levels(factor(sun_data$SunspotActivity)))
+)
+```
