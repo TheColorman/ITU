@@ -48,3 +48,92 @@ boxplot(
   col=c("darkorchid4", "darkorchid1")
 )
 ```
+
+# Part two: Thursday  
+1. Explain the difference between regression, regression model, and simple linear regression model.  
+*Solution*:  
+* Regression: Going back to a previous state or a technique for prediction of a relation between two variables.  
+* Regression model: The mathematical model used in the regression.  
+* Simple linear regression model: The mathematical model used by simple linear regression. Has the form $\hat{Y}_i=\alpha+\beta X_i$ where $\hat{Y}_i$ is the Predicted value, $X_i$ is the Predictor value, $\alpha$ is the intercept and $\beta$ is the slope.  
+  
+2. Pollen Removal. As part of a study to investigate reproductive strategies in plants, biologists recorded the time spent at sources of pollen and the proportions of pollen removed by bumblebee queens and honeybee workers pollinating a species of lily (Data from L. D. Harder and J. D. Thompson, ”Evolutionary Options for Maximizing Pollen Dispersal of Animal-pollinated Plants”, American Naturalist 133 (1989): 323-44.). Find the data in this weeks folder ”data sets”.  
+  
+(a) Draw a scatterplot of proportion of pollen removed versus duration of visit, for the bumblebee queens. 
+*Solution*:  
+```{r}
+bee_data <- read.csv('data/Pollen Removal.csv')
+queens_data <- dplyr::filter(bee_data, BeeType == "Queen")
+plot(queens_data$DurationOfVisit, queens_data$PollenRemoved,
+     main="Pollen removed vs. Duration of visit of queen bees",
+     xlab="Duration of queen visit", ylab="Pollen removed by bee",
+     col="darkgoldenrod1", pch=19)
+```
+
+(b) Find and follow a guide on how to make a simple linear regression line with R.  
+(c) Draw the estimated regression line on the scatterplot.  
+*Solution*:  
+```{r}
+queens_relation <- lm(PollenRemoved ~ DurationOfVisit, data=queens_data)
+R_squared <- summary(queens_relation)$r.squared
+plot(queens_data$DurationOfVisit, queens_data$PollenRemoved,
+     main=sprintf("Pollen removed vs. Duration of visit of queen bees (R^2~%s)", round(R_squared, digits=4)),
+     xlab="Duration of queen visit", ylab="Pollen removed by bee",
+     col="darkgoldenrod1", pch=19)
+abline(queens_relation)
+```
+
+(d) What problems are evident in the residual plot?  
+*Solution*:  
+First we have to draw the residual plot.  
+```{r}
+queens_residual <- resid(queens_relation)
+plot(queens_data$DurationOfVisit, queens_residual,
+     ylab="Residuals", xlab="Duration of queen visit",
+     main="Residuals of Pollen removed vs. Duration of visist of queen bees",
+     col="darkgoldenrod1", pch=17)
+abline(0, 0)
+```
+
+It is clear that the two extreme values $>30$ have a very high influence of the linear regression line. Without them the cluser on the left may have a line with a better fit.  
+  
+(e) Try fitting the regression only for those times less than 31 seconds (i.e. excluding the two longest times). Does this fit better?  
+*Solution*:
+```{r}
+queens_filt <- dplyr::filter(queens_data, DurationOfVisit < 31)
+queens_relation_upd <- lm(PollenRemoved ~ DurationOfVisit, data=queens_filt)
+R_squared <- summary(queens_relation_upd)$r.squared
+plot(queens_filt$DurationOfVisit, queens_filt$PollenRemoved,
+     main=sprintf("Pollen removed vs. Duration of visit of queen bees (R^2~%s)", round(R_squared, digits=4)),
+     xlab="Duration of queen visit", ylab="Pollen removed by bee",
+     col="darkgoldenrod1", pch=19)
+abline(queens_relation_upd)
+```
+As we can see, the $R^2$ value has almost doubled, which means this linear regression is a much better predictor.  
+  
+3. Sampling Bias in Exit Polls. Exit pollsters predict election results before final counts are tallied by sampling voters leaving voting locations. The pollsters have no way of selecting a random sample, so they instruct their interviewers to select every third exiting voter, or fourth, or fifth, or tenth, or some other specific number. Some voters refuse to participate or avoid the interviewer. If the refusers and avoiders have the same voting patterns as the rest of the population, then it shouldn’t matter; the sample, although not random, wouldn’t be biased. If, however, one candidate’s voters are more likely to refuse or avoid interview, the sample would be biased and could lead to misleading conclusion.  
+On November 4, 2004, exit pollsters incorrectly predicted that John Kerry would win the U.S. presidential election over George W. Bush. The exit polls overstated the Kerry advantage in 42 of 50 states. No one expects exit polls to be exact, but chances alone cannot reasonably explain this discrepancy. Although fraud is a possibility, the data are also consistent, with Bush supporters being more likely than Kerry supporters to refuse or avoid participation in the exit poll.  
+In a postelection evaluation, the exit polling agency investigated voter avoidance of interviewers. The data set includes the average Kerry exit poll overestimate (determined after the actual counts were available for a large number of voting precincts, grouped according to the distance of the interviewer from the door. If Bush voters were more likely to avoid interviewers in general, one might also expect a greater avoidance with increasing distance to the interviewer (since there is more opportunity to escape). A positive relationship between distance of the interviewer from the door and amount of Karry overestimate, therefore, would lend credibility to the theory that Bush voters were more likely to avoid exit poll interviews. How strong is the evidence that the mean Karry overestimate increases with increasing distance of interviewer from the door? (Data from Evaluation of Edison/ Mitofsky Election System 2004 prepared by Edison Media Research and Mitofsky International for the National Election Pool (NEP), January 15, 2005)  
+*Solution*:  
+```{r}
+sampling_bias <- read.csv('data/Sampling Bias.csv')
+sampling_relation <- lm(OverEstimate ~ Distance, data=sampling_bias)
+R_squared <- summary(sampling_relation)$r.squared
+plot(sampling_bias$Distance, sampling_bias$OverEstimate,
+     main=sprintf("Distance vs. Overestimate (R^2~%s)", round(R_squared, 3)),
+     xlab="Distance", ylab="Overestimate")
+abline(sampling_relation)
+```
+The $R^2$ value is almost 1, which means the regression is a very good predictor of values. It is however hard to draw conclusions on this data, as there are very few datapoints.  
+  
+4. Sampling Bias in Exit Polls II. This exercise is about differential interview refusal rates in the exit polls conducted in the 2004 U.S. presidential election. The data shows the average proportion of voters who refuse to be interviewed at precincts grouped according to the approximate age of the interviewer. What evidence do the data provide that the mean refusal rate decreased with increasing age of interviewer?  
+*Solution*:  
+```{r}
+sampling_bias <- read.csv('data/Bias II.csv')
+sampling_relation <- lm(Refusal ~ Age, data=sampling_bias)
+R_squared <- summary(sampling_relation)$r.squared
+plot(sampling_bias$Age, sampling_bias$Refusal,
+     main=sprintf("Age vs. Refusal of interview (R^2~%s)", round(R_squared, 3)),
+     xlab="Age", ylab="Refusal of interview")
+abline(sampling_relation)
+```
+Again, $R^2$ is very high which shows the line as an almost perfect fit, but the amount if data points are very limited so it is hard to draw conclusions.  
