@@ -1,0 +1,53 @@
+---
+title: "Applied Statistics -- Exercise 3"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Goal 
+
+To get confident with conditional probability and discrete random variables.
+To make visualizations of discrete distributions in R. 
+
+# Problems
+
+T=Theoretical Exercise, R=R Exercise
+
+## 1. (T)
+
+We are at a train station, waiting for a train. Suppose that the probability of snow is $0.1$. If it is snowing, then the probability that the train is delayed is $0.6$, otherwise, it is $0.2$. Given that the train is delayed, what is the probability that it is snowing? Define appropriate events, and compute the conditional probability.
+
+## 2. (T)
+
+Consider the following experiment. An urn contains 7 black and 13 red balls. You draw 10 balls from the urn with replacement. The outcome $X$ of the experiment the number of red balls you got. 
+
+a) Write down the probability mass function of $X$.
+
+b) Evaluate the probability $P(X=7)$.
+
+
+## 3. (T)
+
+A pair of fair dice is thrown until the sum of the two equals 2. Let the random variable $X$ be the number of throws needed for this, where throwing the pair of dice once is counted as a single throw. Find the probability mass function of $X$.
+
+## 4. (R)
+
+Consider you have two fair coins that you toss simultaneously (fair coins have a 0.5 probability of heads). You repeat the trial 15 times. Let $X$ be the random variable indicating the number of cases, where both coins come with heads up.
+In the following exercises you can use the `dbinom` and `pbinom` functions.
+
+a) Plot the probability mass function of X. What is the probability $P(X=5)$? 
+
+b) What is the probability $P(X\leq 5)$? What is the visual interpretation of this probabilty in the graphic you plotted in (a)?
+
+
+## 5. (R)
+
+You are a collector of soccer players cards. There is just one card missing from your collection. Every day you buy one, and with the probability 1/100 it is the one you are missing. Each purchase is independent from the others.
+Model the number of days it takes to find the missing card by the random variable $X \sim Geo(1/100)$.
+
+a) Plot the distribution function of $X$.
+
+b) How many cards do you have to buy so that the chance of finding the missing card is at least $0.5$? How about at least $0.95$? (play with different ranges for $k$).
+
+c) Assume you have tried for 20 days, but you have not won yet. For how many days do you need to try further so that you have at least a $0.5$ chance of winning?
