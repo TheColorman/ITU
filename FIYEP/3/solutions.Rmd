@@ -2,6 +2,7 @@
 title: "FIYEP Week 03 Exercises"
 output: pdf_document
 ---
+
 ```{r, echo=FALSE, results=FALSE, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
 if (!require("ggplot2")) install.packages("ggplot2")
@@ -18,9 +19,15 @@ library(broom)
 ```
 
 # Part one
-1. Biological Pest Control. In a study of the effectiveness of biological control of the exotic weed tangsy ragwort, researchers manipulated the exposure to the ragwort flea beetle on 15 plots that had been planted with a high density of ragwort. Harvesting the plots the next season, they measured the average dry mass of ragwort remaining (grams/ plant) and the flea beetle load (beetles/ gram of ragwort dry mass) to see if the ragwort plants in plots with high flea beetle loads were smaller as a result of herbivore by the beetles (data from P. McEvoy and C. Cox, ”Successful Biological Control of Ragwort, Senecio jacobaea, by Internatioal insects in Orego”, Ecological Applications 1(4) (1991): 430-42). Data set can be found in this weeks folder Data Sets.  
-(a) Use scatterplots of the raw data, along with trial and error, to determine transformations of $Y = ragwortdrymass$ and of $X = Fleabeetleload$ that will produce an approximate linear relationship (Search the net of how to make transformations of a variable).  
-*Solution*:  
+
+1.  Biological Pest Control. In a study of the effectiveness of biological control of the exotic weed tangsy ragwort, researchers manipulated the exposure to the ragwort flea beetle on 15 plots that had been planted with a high density of ragwort. Harvesting the plots the next season, they measured the average dry mass of ragwort remaining (grams/ plant) and the flea beetle load (beetles/ gram of ragwort dry mass) to see if the ragwort plants in plots with high flea beetle loads were smaller as a result of herbivore by the beetles (data from P. McEvoy and C. Cox, "Successful Biological Control of Ragwort, Senecio jacobaea, by Internatioal insects in Orego", Ecological Applications 1(4) (1991): 430-42). Data set can be found in this weeks folder Data Sets.\
+
+```{=html}
+<!-- -->
+```
+(a) Use scatterplots of the raw data, along with trial and error, to determine transformations of $Y = ragwortdrymass$ and of $X = Fleabeetleload$ that will produce an approximate linear relationship (Search the net of how to make transformations of a variable).\
+    *Solution*:\
+
 ```{r}
 beetle_data <- read.csv('data/Biological Pest Control.csv')
 beetle_trans <- data.frame(
@@ -77,11 +84,12 @@ plot(beetle_trans$Load, beetle_trans$Mass,
      )
 abline(beetle_relation)
 ```
-After trying every single combination of the functions $f(x)=x, g(x)=x^2, h(x)=1/x, i(x)=log2(x), j(x)=x^x$ and $k(x)=\sqrt(x)$, the single best R-value was $\sqrt(x), \log_2(y)$ with and $R^2$ value of $\sim0.824$.  
-  
-(b) For a linear regression model on the transformed scale; calculate residuals and fitted values.  
-(c) Look at the residual plot. Do you want to try other transformations? What do you suggest?
-*Solution*:  
+
+After trying every single combination of the functions $f(x)=x, g(x)=x^2, h(x)=1/x, i(x)=log2(x), j(x)=x^x$ and $k(x)=\sqrt(x)$, the single best R-value was $\sqrt(x), \log_2(y)$ with and $R^2$ value of $\sim0.824$.
+
+(b) For a linear regression model on the transformed scale; calculate residuals and fitted values.\
+(c) Look at the residual plot. Do you want to try other transformations? What do you suggest? *Solution*:\
+
 ```{r}
 model <- lm(Mass ~ Load, data = beetle_trans)
 y_hat <- predict(model, newdata = beetle_trans)
@@ -99,17 +107,20 @@ ggplot(beetle_trans,
 
 ```
 
-There is no reason to try any other transformations, as this is the single best fitted line for all common transformation.  
-  
-2. Ecosystem Decay. In the following we will consider a data set from a study about the effect of Amazon forest clearing. The publication is from 1984 where there is a requirement in Brazil that at least 50 % of the land in any development project remain in forest and tree cover. As a consequence of this requirement, ”islands” of forest of various sizes remain in otherwise cleared areas. In the data set Ecosystem Decay you will find a table with the number of butterfly species in such islands. Analyze the role of area in the distribution of number of butterfly species. Where should such an analysis begin, what should be in such an analysis, what should the order of such statistical methods be? (Take some notes, you will use this on Thursday).  
-*Solution*:  
-First we'll look at the data.  
+There is no reason to try any other transformations, as this is the single best fitted line for all common transformation.
+
+2.  Ecosystem Decay. In the following we will consider a data set from a study about the effect of Amazon forest clearing. The publication is from 1984 where there is a requirement in Brazil that at least 50 % of the land in any development project remain in forest and tree cover. As a consequence of this requirement, "islands" of forest of various sizes remain in otherwise cleared areas. In the data set Ecosystem Decay you will find a table with the number of butterfly species in such islands. Analyze the role of area in the distribution of number of butterfly species. Where should such an analysis begin, what should be in such an analysis, what should the order of such statistical methods be? (Take some notes, you will use this on Thursday).\
+    *Solution*:\
+    First we'll look at the data.\
+
 ```{r}
 fly_data <- read.csv('data/Ecosystem Decay.csv')
 unique(fly_data$Area)
 sort(unique(fly_data$Species))
 ```
-It seems as though the area values follow a $\log_10$ scale, and as such, plots should follow this.  Let's plot the data with `log10(x)`.
+
+It seems as though the area values follow a $\log_10$ scale, and as such, plots should follow this. Let's plot the data with `log10(x)`.
+
 ```{r}
 ggplot(fly_data, aes(x = log10(Area), y = Species)) +
   geom_point() +
@@ -124,9 +135,44 @@ ggplot(fly_data, aes(x = log10(Area), y = Species)) +
   theme_bw()
 
 ```
+
 As we can see, there is a very clear correlation between area and number of butterfly species. We can go further and analyse the qq-plot:
+
 ```{r}
 ggplot(fly_data, aes(sample = Species)) +
   stat_qq() + stat_qq_line()
 ```
+
 It seems qq-plot is not perfectly linear, which means we might be missing something in the data. What that is, I am not sure :D.
+
+# Part two
+
+1.  Write your first piece of LaTeX by copy-pasting the texts on page 8.\
+    *Solution*:\
+    $$
+    \text{I will not.}
+    $$
+
+2.  Use the Not So Short Introduction to LaTeX 2 and figure out how to write the following:
+
+    (a) $hat{Y}_i=\alpha+\beta X_i$
+
+    (b) $$
+          \begin{aligned}
+            \epsilon_i&=Y_i-(\alpha+\beta X_i) \\
+            &=Y-i-\hat{Y}_i
+          \end{aligned}
+        $$
+    (c) $$
+          \begin{tabular}{c | c | c}
+            Average temperature & Number of pirates & Year \\
+            \hline
+            14.2 & 35000 & 1820 \\
+            14.3 & 45000 & 1860 \\
+            14.6 & 20000 & 1880 \\
+            14.9 & 15000 & 1920 \\
+            I'm not & writing any & more
+          \end{tabular}
+        $$
+3.  First find in the LaTeX guide the section about inserting images and graphics. Take one of your plots from RStudio, export it -in an appropriate file format, and insert it in your LaTeX document.  
+ok I cannot be bothered to do anymore of this when I already know it.
