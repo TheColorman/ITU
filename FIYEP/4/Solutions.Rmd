@@ -1,0 +1,128 @@
+---
+title: "FIYEP Week 04 Exercises"
+output: pdf_document
+---
+1. Pollen Removal 2. Reconsider the study on proportion of pollen removed and duration of visit to the flower for bumblebee queens and honeybee workers, in previous exercise, data set will also be in this weeks’ folder. i) Write down a model that describes the mean proportion of pollen removed as a straight-line function of duration of visit, with separate intercepts and separate slopes for bumblebee queens and honeybee workers. ii) How would you test whether the effect of duration of visit on proportion removed is the same for queens as for workers?  
+*Solution*:  
+```{r}
+library(ggplot2)
+
+bee_data <- read.csv('data/Pollen Removal.csv')
+
+gg <- ggplot(
+  bee_data, aes(x=DurationOfVisit, y=PollenRemoved, col=BeeType)
+) + 
+  geom_point(size=3) +
+  geom_smooth(method="lm", linewidth=1, se=FALSE) +
+  labs(title="Duration of visit Vs. Pollen removed", y="Pollen removed", x="Duration of visit")
+
+plot(gg)
+```
+To test whether the effect of duration of visits on pollen removed is different, we can compare the simple regression, $PollRem_i=\beta_0+\beta_1VisitDur+\epsilon_i$ to a model that accounts for the species, $PollRem_i=\beta_0+\beta_1VisitDur+\beta_2IsQueen+\beta_3(VisitDur\cdot IsQueen)+\epsilon_I$.  
+Then we can use a likelihood ratio test to compare the two models, as the first one is a sub-model of the second.  
+The test has two hypotheses:  
+**$H_0$**: The full model and the nested model fit the data equally well. Thus, you should **use the nested model**.  
+**$H_a$**: The full model fits the data significantly better than the nested model. Thus you should **use the full model**.  
+We reject a hypothesis based on the p-value.  
+```{r}
+# https://www.statology.org/likelihood-ratio-test-in-r/
+library(lmtest)
+
+# fit full model
+model_full <- lm(PollenRemoved ~ DurationOfVisit + BeeType, data = bee_data)
+
+# fit reduced model
+model_reduced <- lm(PollenRemoved ~ DurationOfVisit, data = bee_data)
+
+# perform likelihood ratio test for differences in models
+lrtest(model_full, model_reduced)
+```
+The Chi-Squared test-statistic is $3.3928$ and the p-value is $0.06548$, which is quite low. Therefore, we reject the null hypothesis.  
+(Note: this does not prove a difference between queens and workers, but rather which model is a better fit, all bees or queen vs worker bees. Not quite sure how to do the queen vs. worker test.)  
+  
+2. Kentucky Derby. In the data set Kentucky Derby, is a listing of Kentucky Derby horse race winners from 1896 to 2011. In all those years the race was 1.25 miles in lengths so that winning time and speed are exactly inversely related. Nevertheless, a simple regression model for changes over time - such as a straight line model that include ”year” or a quadratic curve that includes ”Year” and ”Year2” -might work better for one of those response variables than the other.  
+a) Find a model for describing the mean of either winning time or winning speed as a function of year, whichever works better.  
+*Solution*:  
+The model is a linear model of the form $Mean_i=\beta_0+\beta_1 Year_i$ where $Year_i$ is the $i$th year, and $Mean_i$ is the mean for either winning time or winning speed for the $i$th year. Let's start by plotting the values and fitting a simple linear regression model.  
+```{r}
+library(comprehenr)
+horse_data <- read.csv('data/Kentucky Derby.csv')
+horse_years <- unique(horse_data$Year)
+horse_means <- to_vec(for(
+    year in horse_years
+  ) mean(horse_data[horse_data$Year == year,]$Speed)
+)
+
+horse_mean_data <- data.frame(
+  Year = horse_years,
+  MeanSpeed = horse_means
+)
+
+gg <- ggplot(
+  horse_mean_data, aes(x=Year, y=MeanSpeed)
+) + 
+  geom_point(size=3) +
+  geom_smooth(method="lm", linewidth=1, se=FALSE) +
+  labs(title="Year Vs. Mean speed", y="Mean speed", x="Year")
+
+plot(gg)
+```
+
+The data doesn't look perfectly linear, so let's try a spread level plot.  
+```{r}
+library(car)
+spreadLevelPlot(lm(Year ~ MeanSpeed, data = horse_mean_data))
+```
+As we can see, the residuals are both skewed and the data is heteroscedastic. Let's try a qq-plot:  
+```{r}
+gg <- ggplot(
+  horse_mean_data, aes(sample = MeanSpeed)
+) +
+  stat_qq() + stat_qq_line()
+plot(gg)
+```
+There's a very apparent negative skew in the qq-plot, which can't easily be fixed with a transformation, so a linear model will have to do.  
+```{r}
+model <- lm(MeanSpeed ~ Year, data = horse_mean_data)
+model
+```
+As we can see, the model implies an increase of mean speed by ~0.0008 per year.  
+b) Quantify the amount by which the mean winning time or speed on fast tracks exceeds the mean on slow tracks (using the two-category variable ”Conditions”), after accounting for the effect of year.  
+*Solution*:  
+We need to create the model $Mean_i=\beta_0+\beta_1 Year_i+\beta_2 IsFast_i$.  
+```{r}
+library(comprehenr)
+horse_data <- read.csv('data/Kentucky Derby.csv')
+horse_years <- unique(horse_data$Year)
+
+horse_means_data <- data.frame()
+mylist <- list()
+
+for (year in horse_years) {
+  slow_mean <- mean(horse_data[
+    horse_data$Year == year &
+    horse_data$Conditions == "Slow",
+  ]$Speed)
+  
+  fast_mean <- mean(horse_data[
+    horse_data$Year == year &
+    horse_data$Conditions == "Fast",
+  ]$Speed)
+  
+  if (!is.nan(slow_mean)) {
+    mylist[[length(mylist) + 1]] <- c(
+      Year = year,
+      MeanSpeed = slow_mean,
+      Conditions = "Slow"
+    )
+  }
+  if (!is.nan(fast_mean)) {
+    mylist[[length(mylist) + 1]] <- c(
+      Year = year,
+      MeanSpeed = fast_mean,
+      Conditions = "Fast"
+    )
+  }
+}
+do.call(rbind.data.frame, mylist)
+```
