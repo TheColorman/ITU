@@ -118,4 +118,4 @@ Looking in the table, the value closest to 0.15 is $0.1492$. This is the right-t
    
 4. In R you can easily use several standard distributions. For instance, by using the commands ‘dnorm’, ‘pnorm’, ‘qnorm’, ‘rnorm’, you get access to the density, distribution, quantile, and random number generation of the normal distribution, respectively.  
 (a) Generate 10 normally distributed samples from the standard normal distribution N(0,1). Plot them in R together with graphs of the corresponding probability density function and the distribution function.  
-*solution*:  
+*Solution*:  
