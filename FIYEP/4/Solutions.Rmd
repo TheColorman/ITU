@@ -91,38 +91,19 @@ b) Quantify the amount by which the mean winning time or speed on fast tracks ex
 *Solution*:  
 We need to create the model $Mean_i=\beta_0+\beta_1 Year_i+\beta_2 IsFast_i$.  
 ```{r}
-library(comprehenr)
-horse_data <- read.csv('data/Kentucky Derby.csv')
-horse_years <- unique(horse_data$Year)
+dummy_horse <- horse_data
 
-horse_means_data <- data.frame()
-mylist <- list()
+#Create dummy variable
+dummy_horse$Fast <- as.numeric(dummy_horse$Conditions == "Fast")
 
-for (year in horse_years) {
-  slow_mean <- mean(horse_data[
-    horse_data$Year == year &
-    horse_data$Conditions == "Slow",
-  ]$Speed)
-  
-  fast_mean <- mean(horse_data[
-    horse_data$Year == year &
-    horse_data$Conditions == "Fast",
-  ]$Speed)
-  
-  if (!is.nan(slow_mean)) {
-    mylist[[length(mylist) + 1]] <- c(
-      Year = year,
-      MeanSpeed = slow_mean,
-      Conditions = "Slow"
-    )
-  }
-  if (!is.nan(fast_mean)) {
-    mylist[[length(mylist) + 1]] <- c(
-      Year = year,
-      MeanSpeed = fast_mean,
-      Conditions = "Fast"
-    )
-  }
-}
-do.call(rbind.data.frame, mylist)
+#Multiple regression
+gg <- ggplot(
+  dummy_horse, aes(x=Year, y=Speed, col=Fast)
+) + 
+  geom_point(size=3) +
+  geom_smooth(method="lm", linewidth=1, se=FALSE) +
+  labs(title="Year Vs. Mean speed", y="Mean speed", x="Year")
+
+plot(gg)
+
 ```
