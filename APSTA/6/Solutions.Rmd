@@ -2,11 +2,13 @@
 title: "APSTA Week 06 Exercises"
 output: document_pdf
 ---
-1.  
-Sum them, they are all 0.25  
+1. Melencolia distribution  
+*Solution*:  
+Sum them, they are all 0.25.  
   
-2.  
-a) Double integral!
+2. Joint distribution  
+*Solution*:  
+a)  
 X+Y<1 => Y<1-X, so Y goes from 0 to 1-X
 $$
 \begin{aligned}
@@ -16,7 +18,7 @@ $$
 &=\frac{1}{6}c+\frac{1}{2}
 \end{aligned}
 $$
-entire integral has to be 1, c=3 (why does the integral have to be 1?)
+entire integral has to be 1 as the probability of everything summed is 100%. Solving for c, $c=3$.
 b) marginal distribution
 $$
 \begin{aligned}
