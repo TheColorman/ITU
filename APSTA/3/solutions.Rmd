@@ -85,6 +85,11 @@ Probability to get a sum of 2 on the $k$th throw.
 $$
 P(X=k)=\frac{1}{36}\cdot k
 $$
+Above is wrong, this is correct
+$$
+\left(\frac{35}{36}\right)^{k-1}\cdot\frac{1}{36}
+$$
+, Geometric distribution. X is the first trial where we get the sum of 2. It is the function of trials until success.
 4. Consider you have two fair coins that you toss simultaneously (fair coins have a 0.5 probability of heads). You repeat the trial 15 times. Let $X$ be the random variable indicating the number of cases, where both coins come with heads up. In the following exercises you can use the `dbinom` and `pbinom` functions.  
 a) Plot the probability mass function of $X$. What is the probability $P(X = 5)$?  
 b) What is the probability $P(X \leq 5)$? What is the visual interpretation of this probability in the graphic you plotted in (a)?  
@@ -98,9 +103,9 @@ a) Now we plot it
 p.X <- function(k) {
   return((0.25^k)*(0.75^(15-k))*(factorial(15)/(factorial(k)*factorial(15-k))))
 }
-points <- lapply(1:15, FUN=p.X)
+points <- lapply(0:15, FUN=p.X)
 plot(
-  x=1:15, y=points,
+  x=0:15, y=points,
   xlab="Number of trials with two heads", ylab="Probability",
   main="Plot of Bernoulli distribution of X"
 )
@@ -113,7 +118,7 @@ sprintf("P(X=%s)~%s%%", k, round(p.X(k)*100, 1))
 ```
 b) $P(X\leq5)$ is the sum of the probabilities of $X=1$ to $X=5$:
 ```{r}
-sprintf("P(X<=5)~%s%%", round(sum(sapply(1:5, FUN=p.X))*100, 1))
+sprintf("P(X<=5)~%s%%", round(sum(sapply(0:5, FUN=p.X))*100, 1))
 ```
 5. You are a collector of soccer players cards. There is just one card missing from your collection. Every day you buy one, and with the probability 1/100 it is the one you are missing. Each purchase is independent from the others. Model the number of days it takes to find the missing card by the random variable $X \sim Geo(1/100)$.  
 a) Plot the distribution function of $X$.  
@@ -133,9 +138,9 @@ a) Plotting the function:
 p.X <- function(k) {
   return((1-(1/100))^(k-1)*(1/100))
 }
-points <- lapply(1:100, FUN=p.X)
+points <- lapply(1:500, FUN=p.X)
 plot(
-  x=1:100, y=points,
+  x=1:500, y=points,
   xlab="Number of trials with two heads", ylab="Probability",
   main="Plot of Bernoulli distribution of X"
 )

@@ -2,3 +2,29 @@
 title: "FIYEP Week 05 Exercises"
 output: pdf_document
 ---
+1. IQ scores and Income. Continuing studying of IQ scores. In the data set is a listing from the National Longitudinal Study of Youth (NLSY79) with annual income in 2005 (in U.S. dollars, as recorded in a 2006 interview) and scores on the Word Knowledge, Paragraph Comprehension, Arithmetic Reasoning, and Mathematics Knowledge portions of the Armed Forces Vocational Test, which is based on a linear combination of the four components and which is sometimes used as a general intelligence test score. In this exercise we will consider the dependence of 2005 income with AFQT score. First study if or how well the AFGT score predicts the 2005 income. However, a much more interesting question is whether there might be some better linear combination of the four components than AFQT for predicting income. Investigate this by seeing whether the component scores are useful predictors of ”Income2006” in addition to AFQT. Also see whether AFQT is a predictor in addition to the four test scores. Which test scores seem to be the most important predictors of 2005 income?  
+*Solution*:  
+```{r}
+iq <- read.csv('data/IQ scores and income.csv')
+# make model
+afqt_model <- lm(Income2005 ~ AFQT, data=iq)
+summary(afqt_model)
+```
+AFQT very clearly predicts income. The p-value is extremely small (<2e-16), so we're basically guaranteed that there's a correlation. We can see that a persons yearly income is around $519 higher for every point on AFQT. It's important to note that I have not done any tests to ensure the assumption about data (such as homoscedasticity or linearity), but I am assuming that the assumptions are met.  
+  
+Now I set up a model that uses the individual test scores (no interaction).  
+```{r}
+test_model <- lm(Income2005 ~ Arith + Word + Parag + Math, data=iq)
+summary(test_model)
+```
+So Arithmetic Reasoning and Mathematics Knowledge seem to relate to income, with very low p-values (under 0.05), but Paragraph Comprehension and especially Word Knowledge have pretty high p-values, which means random data might as well have been used to generate the same results for those predictors. Let's remove those then.  
+```{r}
+lim_test_model <- lm(Income2005 ~ Arith + Math, data=iq)
+summary(lim_test_model)
+```
+These p-values are much better. As we can see, Arithmetic Reasoning has a slightly higher estimate. Now lets try to incorporate AFQT too, first with the two bad predictors.
+```{r}
+high_model <- lm(Income2005 ~ Arith + Word + Parag + Math + AFQT, data=iq)
+summary(high_model)
+```
+We've learned that AFQT also has a p-value too high for us to know for sure that it is correlated, most definitely due to the fact that the Word and Parag predictors themselves have high p-values. In fact, including AFQT doesn't make much sense, as it is multicollinear with the other predictors, since AFQT is a measure of the other scores. That means the limited score model was the best one. 
