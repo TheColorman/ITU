@@ -11,31 +11,31 @@ x,&\text{if }0<x\leq1 \\
 0,&\text{otherwise}.
 \end{cases}
 $$
-Use central limit theorem to approximate $P(X_1+X_2+\dots+X_{277}>301).  
+Use central limit theorem to approximate $P(X_1+X_2+\dots+X_{277}>301)$.  
   
 *Solution*:  
 We first need to transform the variable:
 $$
-\begin{align}
+\begin{aligned}
 P(X_1+X_2+\dots+X_{277}>301)&=P(X_1+X_2+\dots+X_{277}-277\mu>301-277\mu) \\
 &=P\left(\frac{X_1+X_2+\dots+X_{277}-277\mu}{\sigma\sqrt{277}}>\frac{301-277\mu}{\sigma\sqrt{277}}\right) \\
 &=P(Z_{277}>\frac{301-277\mu}{\sigma\sqrt{277}})
-\end{align}
+\end{aligned}
 $$
 First we need the expected value $\mu$ and the variance $\sigma^2$.  
 $$
-\begin{align}
+\begin{aligned}
 \mu=\mathrm{E}[X_i]&=\int_0^2 xf(x)\ \mathrm{d}x \\
 &=\int_0^1 x\cdot x\ \mathrm{d}x + \int_1^2 x\cdot(-x+2)\ \mathrm{d}x \\
 &=\left[\frac{1}{3}x^3\right]_0^1 + \left[-\frac{1}{3}x^3+x^2\right]_1^2 \\
 &=3-\frac{6}{3} \\
 &=\frac{9}{3}-\frac{6}{3} \\
 &=1
-\end{align}
+\end{aligned}
 $$
 To calculate the variance, we also need to calculate $\mathrm{E}[X^2]$.
 $$
-\begin{align}
+\begin{aligned}
 \mathrm{E}[X_i^2]&=\int_0^2 x^2f(x)\ \mathrm{d}x \\
 &=\int_0^1 x^2\cdot x\ \mathrm{d}x + \int_1^2 x^2\cdot(-x+2)\ \mathrm{d}x \\
 &=\left[\frac{1}{4}x^4\right]_0^1 + \left[-\frac{1}{4}x^4+\frac{2}{3}x^3\right]_1^2 \\
@@ -43,28 +43,28 @@ $$
 &=\frac{3}{12}-\frac{48}{12}+\frac{64}{12}+\frac{3}{12}-\frac{8}{12} \\
 &=\frac{14}{12} \\
 &=\frac{7}{6}
-\end{align}
+\end{aligned}
 $$
 Now we can calculate the variance
 $$
-\begin{align}
+\begin{aligned}
 \sigma^2=Var(X_i)&=\mathrm{E}[X_i^2]-(\mathrm{E}[X_i])^2 \\
 &=\frac{7}{6}-1 \\
 &=\frac{7}{6}-\frac{6}{6} \\
 &=\frac{1}{6}
-\end{align}
+\end{aligned}
 $$
 And of course, $\sigma=\sqrt{\sigma^2}=\sqrt{\frac{1}{6}}=\frac{1}{\sqrt{6}}$.
 Now we plug the numbers into the formula from earlier:
 $$
-\begin{align}
+\begin{aligned}
 P\left(Z_{277}>\frac{301-277\mu}{\sigma\sqrt{277}}\right)&=P\left(Z_{277}>\frac{301-277}{\frac{1}{\sqrt{6}}\sqrt{277}}\right) \\
 &=P\left(Z_{277}>\frac{24}{\sqrt{\frac{277}{6}}}\right) \\
 &\approx P(Z_{277}>3.53221) \\
 &=1-P(Z_{277}<3.53221) \\
 &\approx1-\Phi(3.53221) \\
 &=0.0002
-\end{align}
+\end{aligned}
 $$
 
 # Simple Statistics (R)  
@@ -129,10 +129,9 @@ plot(est)
 ```{r}
 plot(diamond$price, diamond$size)
 ```
-¯\\\_(ツ)_/¯  
   
 # 5. Mean and median of two datasets (Theory)  
-Consider two datasets $x_1,\dots,x_n$ and $y_1,\dots,y_m$. Note that they have different lengths. Let $\bat{x}$ be the sample mean of the first, and $\bar{y}$ the sample mean of the second. Consider the combined dataset $x_1,\dots, x_n, y_1,\dots, y_m$ with $m + n$ elements, obtained by concatenating the two original datasets.  
+Consider two datasets $x_1,\dots,x_n$ and $y_1,\dots,y_m$. Note that they have different lengths. Let $\bar{x}$ be the sample mean of the first, and $\bar{y}$ the sample mean of the second. Consider the combined dataset $x_1,\dots, x_n, y_1,\dots, y_m$ with $m + n$ elements, obtained by concatenating the two original datasets.  
 a. Is it true that the sample mean of the combined dataset is equal to $\frac{\bar{x}+\bar{y}}{2}$? If yes, provide a proof, if no, provide a counterexample.  
 b. Consider the case where $m = n$, i.e. the two datasets have the same size. In this special case, is the sample mean of the combined dataset equal to $\frac{\bar{x}+\bar{y}}{2}$? If yes, provide a proof, if no, provide a counterexample.  
 c. Consider now the sample medians $Med_x$ and $Med_x$ of the two datasets, in the general case of $m\neq n$. Is it true that the sample median of the combined dataset is equal to $\frac{Med_x+Med_y}{2}$? If yes, provide a proof, if no, provide a counterexample.  
@@ -142,25 +141,25 @@ d. In the special case of $m=n$, is the sample median of the combined dataset is
 Let's call the new dataset $z$.
 a. No.  
 $$
-\begin{align}
+\begin{aligned}
 \bar{x}&=\frac{x_1+\dots+x_n}{n} \\
 \bar{y}&=\frac{y_1+\dots+y_m}{m} \\
 \bar{z}&=\frac{x_1+\dots+x_n+y_1+\dots+y_m}{n+m}
-\end{align}
+\end{aligned}
 $$
 This would only be true if $n+m=2$, that is, either $x$ or $y$ is empty, or each only has 1 element, thus making both their means that same element.  
 Counterexample:
 $$
-\begin{align}
+\begin{aligned}
 \bar{x}&=\frac{1+2+3}{3}=2 \\
 \bar{y}&=\frac{4+5+6+7}{4}=5.5 \\
 \bar{z}&=\frac{1+2+3+4+5+6+7}{7}=4 \\
 \frac{\bar{x}+\bar{y}}{2}&=\frac{2+5.5}{2}=3.75
-\end{align}
+\end{aligned}
 $$  
 b. Yes.  
 $$
-\begin{align}
+\begin{aligned}
 \bar{x}&=\frac{x_1+\dots+x_n}{n} \\
 \bar{y}&=\frac{y_1+\dots+y_n}{n} \\
 \bar{z}&=\frac{x_1+\dots+x_n+y_1+\dots+y_n}{n+n} \\
@@ -168,17 +167,17 @@ $$
 &=\frac{\frac{x_1+\dots+x_n+y_1+\dots+y_n}{n}}{2} \\
 &=\frac{\frac{x_1+\dots+x_n}{n}+\frac{y_1+\dots+y_n}{n}}{2} \\
 &=\frac{\bar{x}+\bar{y}}{2}
-\end{align}
+\end{aligned}
 $$  
   
 c. No.  
 Counterexample:  
 $$
-\begin{align}
+\begin{aligned}
 Med_x\text{ of } \{1, 2, 3, 4\}&=2.5 \\
 Med_y\text{ of } \{7, 8, 9, 10, 11\}&=9 \\
 Med_z\text{ of } \{1, 2, 3, 4, 7, 8, 9, 10, 11\}&=7 \\
 \frac{Med_x+Med_y}{2}&=\frac{2.5+9}{2}=5.75.
-\end{align}
+\end{aligned}
 $$
 d. Yes. Not sure how to prove it though. Call it a conjecture.  
