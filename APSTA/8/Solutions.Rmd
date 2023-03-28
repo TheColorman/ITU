@@ -180,4 +180,4 @@ Med_z\text{ of } \{1, 2, 3, 4, 7, 8, 9, 10, 11\}&=7 \\
 \frac{Med_x+Med_y}{2}&=\frac{2.5+9}{2}=5.75.
 \end{aligned}
 $$
-d. Yes. Not sure how to prove it though. Call it a conjecture.  
+d. No.
