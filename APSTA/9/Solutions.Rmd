@@ -29,6 +29,9 @@ $$
 $$
 a *very* low probability.  
   
+CORRECT ANSWER:  
+$(1/8)^n$.
+  
 b. What is the probability that the minimum of the bootstrap dataset is $1$?  
 For each bootstrap value, there is a $\frac{1}{8}$ probability of it being equal to $1$. Repeat this $8$ times, and we have a binomial distribution with parameters $n=8,p=1/8$. The cumulative distribution function of this distribution is given by:  
 $$
@@ -48,6 +51,9 @@ $$
 &\approx0.656
 \end{aligned}
 $$
+CORRECT ANSWER:    
+The probability that the min is 1, is the compliment to the probability that *all* samples are not 1. That is $7/8$ for each sample, or $(7/8)^n$ in total, and since it's the compliment it's $1-(7/8)^n$.
+
 c. What is the probability that in the bootstrap sample exactly two elements are $\leq6$ and all the other are $\geq15$?  
 I'll calculate the total number of cases for this one.  
 There are $8$ bootstrap samples. $2$ of them have to be one of $1,4,6$, the other $6$ have to be one of $15,19$.  
@@ -58,7 +64,11 @@ As we can see, $Lo_2$ has a total of $7$ positions to be in. If we move $Lo_1$ o
 $$
 \frac{576\cdot7!}{16777216}=\frac{576\cdot5040}{16777216}=\frac{2903040}{16777216}\approx0.173.
 $$
-
+CORRECT ANSWER:  
+$$
+P(A)=\left(\frac{3}{8}\right)^2\left(\frac{1}{4}\right)^{n-2}\binom{n}{2}
+$$
+  
 # 2. Bright stars (R)  
 Consider the `brightness` dataset from the `UsingR` package, which collects the brightness of $966$ stars. Using empirical bootstrap, estimate the probability
 $$
