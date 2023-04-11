@@ -113,12 +113,12 @@ Looks like the dataset has missing values, so let's remove those.
 arctic.cleaned <- na.omit(arctic.oscillations)
 ```
 
-To be able to use the parametric bootstrap, we need to estimate the parameters of a normal distribution. The normal distribution is $N(\mu,\sigma^2)$, where $\mu$ is the expected value and $\sigma^2$ is the variance. We can estimate these using the sample mean $\bar{X}_n$ and the sample variance $S^2_n$ respectively.  
+To be able to use the parametric bootstrap, we need to estimate the parameters of a normal distribution. The normal distribution is $N(\mu,\sigma^2)$, where $\mu$ is the expected value and $\sigma^2$ is the variance. The function in R however, does not use variance, but standard deviation. We can estimate these using the sample mean $\bar{X}_n$ and the sample standard deviation $S_n$ respectively.  
 ```{r}
 expectation_estimate <- mean(arctic.cleaned)
-variance_estimate <- var(arctic.cleaned)
+sd_estimate <- sd(arctic.cleaned)
 plot(ecdf(arctic.cleaned))
-curve(pnorm(x, mean=variance_estimate, sd=variance_estimate), col='red', add=T)
+curve(pnorm(x, mean=expectation_estimate, sd=sd_estimate), col='red', add=T)
 ```
 They look sort of similar, but let's check with the KS distance.  
 ```{r}
@@ -134,7 +134,7 @@ ks_distance_norm_distribution <- function(bootstrapped_data, mean, sd) {
 ks_estimate <- ks_distance_norm_distribution(
   arctic.cleaned, 
   expectation_estimate, 
-  variance_estimate
+  sd_estimate
 )
 
 bootstrap_ks <- c()
@@ -142,21 +142,21 @@ for (i in 1:1000) {
   bootstrap_sample <- rnorm(
     length(arctic.cleaned), 
     mean = expectation_estimate, 
-    sd = variance_estimate
+    sd = sd_estimate
   )
   bootstrap_expectation <- mean(bootstrap_sample)
-  bootstrap_variance <- var(bootstrap_sample)
+  bootstrap_sd <- var(bootstrap_sample)
   bootstrap_ks <- c(
     bootstrap_ks, 
     ks_distance_norm_distribution(
       bootstrap_sample, 
       bootstrap_expectation, 
-      bootstrap_variance
+      bootstrap_sd
     )
   )
 }
 
-plot(density(bootstrap_ks), xlim=c(0,0.2))
+plot(density(bootstrap_ks), xlim=c(0,0.06))
 abline(v=ks_estimate, col='red')
 ```
 Looks like our KS distance is wayy higher than we would expect if the distribution was actually normal.  
