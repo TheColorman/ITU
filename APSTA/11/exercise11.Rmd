@@ -1,0 +1,46 @@
+---
+title: "Applied Statistics - Exercise 11"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1. Sugar Packaging (Theory)
+
+A sugar packaging machine is filling the bags with sugar where the weight accurately follows normal distribution with the mean $\mu$ and variance $\sigma^2$, where $\sigma =7 \mathrm{g}$. In the sample of 36 packages the sample mean for the weight is $507\mathrm{g}$. Compute the 97% confidence interval for $\mu$.
+
+# 2. Bags of potatoes (Theory)
+
+You bought 10 very large bags of potatoes.
+Assume that the 10 weights can be viewed as a realization of a random sample from a normal distribution with unknwown parameters.
+Your measures give you the following data:
+
+- Sample mean: 14.5 kg
+- Sample standard deviation: 0.3 kg
+
+Construct a 95% confidence interval for the expected weight of a bag.
+
+# 3. How many samples do we need? (Theory)
+
+Assume that we measure a person’s height (in meters) and that the measurements are normal distributed with standard deviation $\sigma = 0.01$. How many measurements do we to make, if we want a 99% confidence interval no wider than 0.001 meters for the mean $\mu$?
+Please explain how you find the number of required measurements.
+
+
+# 4. Cats & confidence (R)
+
+The `cats` data set (available in `UsingR`) contains the bodyweight and heart weight of adult cats, along with their sex.
+
+(a) Compute the mean and the $90\%$ confidence intervals for the body weight and heart weight assuming normality of the samples. Do the computation separately for the female and male cats. (So you have to compute 4 confidence intervals). Is there any difference between the results?
+
+(b) Compute the one-sided 95% confidence intervals for the mean body weight of male cats and compare to the results you obtained at (a).
+
+# 5. Bootstrapping confidence intervals (R)
+
+Consider again the `cats` dataset of the previous exercise.
+Construct the 90% confidence intervals for the mean body weight of male cats by empirical bootstrap, using 500 bootstrap repetitions. Compare the result to those you got in Problem 1.  
+How do they compare with the intervals you found in the previous exercise?
+
