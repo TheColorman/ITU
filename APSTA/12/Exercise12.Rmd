@@ -1,0 +1,77 @@
+---
+title: "Exercise 12"
+subtitle: "Applied Statistics, IT University of Copenhagen"
+output:
+  pdf_document: default
+documentclass: article
+classoption: a4paper
+references:
+- id: Verzani2014
+  type: book
+  title: "Using R for Introductory Statistics"
+  author:
+  - family: Verzani
+    given: John
+  issued:
+    year: 2014
+  publisher: CRC Press
+---
+
+# Preparation
+
+* Read pages 294--302 from @Verzani2014.
+
+# Problems
+
+```{r, message=FALSE, include=FALSE}
+require(UsingR)
+```
+
+## 1. Coin flipping (T)
+
+Assume that you flipped a coin $N=11$ times. You got tails 7 times and heads 4 times, after which the coin fell into a well and you lost it. After the experiment you started to wonder whether the coin was fair. 
+
+(a) Formulate test statistic, the null hypothesis and alternative hypothesis for testing the fairness of the coin. 
+
+(b) Was the coin fair? Assume 0.05 risk level.
+
+
+## 2. Car Problems (R)
+
+Historically, a car from a given company has a 10% chance of having a significant
+mechanical problem during its warranty period. A new model of the car is being sold. Of
+the first 25,000 sold, 2,700 have had an issue. Perform a test of significance to see
+whether the proportion of these new cars that will have a problem is more than 10%.
+What is the p-value?
+
+
+
+## 3. Horse Race (T)
+
+To investigate the hypothesis that a horse´s chances of winning an eight-horse race on a circular track are affected by its position in the starting lineup, the starting position of each of 144 winners was recorded. It turned out that 29 of these winners had starting position one (closest to the rail on the inside track). We model the number of winners with starting position one by a random variable $T$ with a $\mathrm{Bin}(144,p)$ distribution. We test the hypothesis $H_0:\ p=1/8$ against $H_1:\ p > 1/8$ at the level $\alpha =0.01$ with $T$ as test statistic. 
+
+(a) Argue whether the test procedure involves a right critical value, a left critical value, or both. 
+
+(b) Use the normal approximation to compute the critical value(s) corresponding to $\alpha=0.01$, determine the critical region, and report your conclusion about the null hypothesis. 
+
+## 4. Insurance (R)
+
+In the United States in 1998, the proportion of adults age 21–24 who had no
+medical insurance was 34.4 percent, according to the Employee Benefit Research
+Institute. A survey of 75 recent college graduates in this age range finds that 40 are
+without insurance. Does this support a difference from the nationwide proportion?
+Perform a test of significance and report the $p$-value. Is it significant?
+
+
+
+## 5. Type I and II errors (T)
+
+Let $T$ be a random variable following an $N(\mu,1)$ distribution. Assume testing the hypothesis $H_0: \mu=0$ against the alternative hypothesis $H_1: \mu \neq 0$ using the test statistic $T$.
+
+(a) With the decision to reject the null hypothesis if the realisation $|t|>1$ what is the probability of committing a type I error?
+
+(b) Assuming that the true value of $\mu$ is 1, what is the probability of committing a type II error? 
+
+
+
+

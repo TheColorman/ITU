@@ -1,0 +1,177 @@
+---
+title: "APSTA Week 12 Exercises"
+output: pdf_document
+---
+# 1. Coin flipping (T)  
+Assume that you flipped a coin $N = 11$ times. You got tails $7$ times and heads $4$
+times, after which the coin fell into a well and you lost it. After the experiment
+you started to wonder whether the coin was fair.  
+(a) Formulate test statistic, the null hypothesis and alternative hypothesis for
+testing the fairness of the coin.  
+(b) Was the coin fair? Assume 0.05 risk level.  
+  
+*Solution*:  
+The test statistic is going to be number of heads, $H$, in this case, the realisation of $H$ is $h=4$. This is a random variable with a binomial distribution of $n$ Bernoulli distributed random variables. In this case,
+$$
+H=R_1+R_2+\dots+R_{11}
+$$
+where $R_i=1$ if the coin flip resulted in a heads. Each flip $R_i$ has probability $p$ of being a heads.  
+The null hypothesis is that the coin is fair. That is, $H_0:p=0.5$, with the alternative hypothesis being that the coin is unfair. Specifically, I only care about the scenario that tails is more likely than heads, as that is what I see from my data. Therefore, $H_1:p<0.5$.  
+I can now test whether the coin is fair. Assuming $H_0$, $\mathrm{P}(R_i=1)=0.5$. For 11 coin flips, that is
+$$
+\mathrm{P}(H=k)=\binom{11}{k}0.5^{11}.
+$$
+I don't want the probability of getting exactly $k$ heads however. I want the probability of seeing a result at least as extreme as $4$ heads. That is, I want $\mathrm{P}(H\leq4)$.  
+$$
+\begin{aligned}
+\mathrm{P}(H\leq4)&=\mathrm{P}(H=4)+\mathrm{P}(H=3)+\dots+\mathrm{P}(H=0) \\
+&=\binom{11}{4}0.5^{11}+\binom{11}{3}0.5^{11}+\dots+\binom{11}{0}0.5^{11} \\
+&=0.5^{11}\left(\binom{11}{4}+\binom{11}{3}+\dots+\binom{11}{0}\right) \\
+&=0.5^{11}(330+165+55+11+1) \\
+&=0.5^{11}(562) \\
+&\approx0.274
+\end{aligned}
+$$
+The coin was most likely fair, as there is still a $27\%$ chance to only get $4$ heads in 11 flips.  
+  
+$ 2. Car Problems (R)  
+Historically, a car from a given company has a $10\%$ chance of having a significant
+mechanical problem during its warranty period. A new model of the car is
+being sold. Of the first $25,000$ sold, $2,700$ have had an issue. Perform a test of
+significance to see whether the proportion of these new cars that will have a
+problem is more than $10\%$. What is the p-value?  
+  
+*Solution*:  
+```{r}
+cars_tot <- 25000
+cars_bad <- 2700
+prop.test(cars_bad, cars_tot, p = 0.1, alternative = "greater")
+```
+p-value of 0.108. The number of problematic cars is not unexpected.  
+  
+# 3. Horse Race (T)  
+To investigate the hypothesis that a horse´s chances of winning an eight-horse
+race on a circular track are affected by its position in the starting lineup, the
+starting position of each of $144$ winners was recorded. It turned out that $29$ of
+these winners had starting position one (closest to the rail on the inside track).
+We model the number of winners with starting position one by a random variable
+$T$ with a $Bin(144, p)$ distribution. We test the hypothesis $H_0:p=1/8$ against
+$H_1:p>1/8$ at the level $\alpha=0.01$ with T as test statistic.  
+(a) Argue whether the test procedure involves a right critical value, a left
+critical value, or both.  
+  
+*Solution*:  
+We want to know whether the true probability $p$ is greater than $1/8$. Therefore, we use a right-tail probability.  
+  
+(b) Use the normal approximation to compute the critical value(s) corresponding
+to $\alpha = 0.01$, determine the critical region, and report your conclusion
+about the null hypothesis.  
+  
+*Solution*:  
+Not sure what's meant by "normal approximation" when the distribution is binomial.  
+I use the exact same technique as above:  
+$$
+\mathrm{P}(T=k)=\binom{n}{k}p^k(1-p)^{n-k}  
+$$
+We want know how many winners can expect before we reach $0.01$ probability. Therefore, we want to model $\mathrm{P}(T\geq k)=0.01$ and solve for $k$.
+$$
+\mathrm{P}(T\geq k)=1-\mathrm{P}(T<k)=1-\mathrm{P}(T\leq k-1)=1-F(k-1).
+$$
+Since realisations of $T$ are discrete real numbers, we change $T<k$ to $T\leq k-1$. Now we solve for $k$ by setting it equal to $0.01$.  
+$$
+\begin{aligned}
+1-F(k-1)&=0.01 \Leftrightarrow \\
+F(k-1)&=0.99 \Leftrightarrow \\
+F^{-1}(0.99)&=k-1 \Leftrightarrow \\
+F^{-1}(0.99)+1&=k \Leftrightarrow \\
+\end{aligned}
+$$
+```{r}
+qbinom(0.99, size=144, p=1/8) + 1
+```
+Therefore, $k=142$. 
+^ this is probably wrong.  
+  
+# 4. Insurance (R)  
+In the United States in $1998$, the proportion of adults age $21–24$ who had no
+medical insurance was $34.4$ percent, according to the Employee Benefit Research
+Institute. A survey of $75$ recent college graduates in this age range finds that
+$40$ are without insurance. Does this support a difference from the nationwide
+proportion? Perform a test of significance and report the p-value. Is it significant?  
+  
+*Solution*:  
+```{r}
+students_tot <- 75
+students_no_insurance <- 40
+p <- 34.4/100
+prop.test(students_no_insurance, students_tot, p=p, alternative="greater")
+```
+p-value is 0.5, there's absolutely no reason to believe the students deviate from the nationwide proportion.  
+  
+# Type I and II errors (T)  
+Let $T$ be a random variable following an $N(\mu, 1)$ distribution. Assume testing
+the hypothesis $H_0:\mu=0$ against the alternative hypothesis $H_1:\mu\neq0$ using
+the test statistic $T$.  
+(a) With the decision to reject the null hypothesis if the realisation $|t|>1$
+what is the probability of committing a type I error?  
+  
+*Solution*:  
+We want to calculate the probability of getting $|t|>1$ with a $N(0,1)$ distribution. That is,
+$$
+\mathrm{P}(|T|>1)
+$$
+We can use the following formula that makes use of critical values:  
+$$
+\mathrm{P}(-z_p\leq Z\leq z_p)=1-2p
+$$
+where $Z$ is a $N(0,1)$ distributed random variable. We just set $z_p=1$ and calculate $p$:
+$$
+\begin{aligned}
+\Phi(z_p)&=1-p \Leftrightarrow \\
+\Phi(1)&=1-p \Leftrightarrow \\
+1-\Phi(1)&=p
+\end{aligned}
+$$
+```{r}
+pnorm(1)
+```
+$$
+p=1-0.8413447=0.1586553
+$$
+Therefore,
+$$
+\mathrm{P}(-z_p\leq Z\leq z_p)=0.683
+$$
+This is then the probability that $T$ lies between $-1$ and $1$, or $\mathrm{P}(|T|<1)$, but we want $\mathrm{P}(|T|>1)$. Therefore
+$$
+\mathrm{P}(|T|>1)=1-\mathrm{P}(|T|<1)=1-0.683=0.317
+$$
+So there is a $31.7\%$ probability of committing a type I error.  
+  
+(b) Assuming that the true value of $\mu$ is $1$, what is the probability of committing
+a type II error?  
+  
+*Solution*:  
+The probability of committing a type II error is the probability of not rejecting $H_0$ despite $H_1$ being true. That is, what is the probability that $|t|<1$ given $\mu=1$.  
+$$
+\mathrm{P}(|T|<1)=\mathrm{P}(-z_p\leq T\leq z_p)=1-2p
+$$
+where $z_p=1$. This time, the distribution is $N(1,1)$.  
+```{r}
+pnorm(1, mean=1)
+```
+We can use the same formula as before
+$$
+\begin{aligned}
+\Phi(z_p)&=1-p \Leftrightarrow \\
+\Phi(1)&=1-p \Leftrightarrow \\
+1-\Phi(1)&=p \Leftrightarrow \\
+1-0.5&=p \Leftrightarrow \\
+p=0.5.
+\end{aligned}
+$$
+Therefore,
+$$
+\mathrm{P}(-1\leq T\leq 1)=0
+$$
+This is clearly wrong :)
