@@ -31,12 +31,12 @@ Now we calculate the realisation of the test statistic.
 $$
 t=\frac{\bar{x}_n-\mu_0}{s_n/\sqrt{n}}=\frac{11-10}{\sqrt{4}/\sqrt{16}}=2.
 $$  
-Since $2\ngeq2.132$, we reject the null hypothesis.  
+Since $2\ngeq2.132$, we cannot reject the null hypothesis.  
 To check the one-sided probability in the hypothesis $H_1:\mu>10$, we use $t_{n-1,\alpha}$ instead of $t_{n-1,\alpha/2}$.  
 ```{r}
 qt(1-0.05, 15)
 ```
-Since $2\geq1.753$, we cannot reject $H_0$ in favour of $H_1:\mu>10$. We can only reject $H_0$ in favour of $H_1:\mu\neq10$.  
+Since $2\geq1.753$, we reject $H_0$ in favour of $H_1:\mu>10$.  
 (This makes sense because the two-sided version takes into account the extremes on both sides. By removing the lower extreme, we can decrease the upper extreme under the same confidence.)  
   
 # 2. Major League Baseball (R)  
@@ -190,3 +190,109 @@ This value is outside the critical region, so the null hypothesis is not rejecte
 (b) Do the same without the assumption of equal variances.  
   
 *Solution*:  
+With no equal variance, we use the Welch's test. The test statistic is
+$$
+T_d=\frac{\bar{X}_n-\bar{Y}_m}{S_d}
+$$
+where
+$$
+S_d^2=\frac{S_X^2}{n}+\frac{S_Y^2}{m}.
+$$
+What's interesting about this test statistic is its degrees of freedom. It has $v$ degrees of freedom, where
+$$
+v=\frac{\left(\frac{S_X^2}{n}+\frac{S_Y^2}{m}\right)^2}{\frac{S^4_X}{n^2(n-1)}+\frac{S^4_Y}{m^2(m-1)}}.
+$$
+With a $t(v)$ distribution, our critical value is $t_{v,0.05/2}$ and we need to calculate $v$. I've opted to do this in R and not by hand because I don't hate myself enough.  
+```{r}
+var_x <- 41258741
+var_y <- 50744521
+n <- 72
+m <- n
+
+v <- ( ( (var_x/n) + (var_y/m) )^2 ) / ( ( (var_x^2)/((n^2) * (n-1)) ) + ( (var_y^2/((m^2) * (m-1)) ) ) )
+cat("Degrees of freedom:", v)
+```
+And the $t_{140.5064,0.05/2}$ critical value is:
+```{r}
+qt(1-0.05/2, v)
+```
+with the critical region being the complement of $[-1.976992,1.976992]$. Our realisation of the test statistic is
+$$
+t_d=\frac{\bar{x}_n-\bar{y}_m}{\sqrt{\frac{s_x^2}{n}+\frac{s_y^2}{m}}}=\frac{17410-19818}{\sqrt{\frac{41258741}{72}+\frac{50744521}{72}}}=-2.130204.
+$$
+This value is in the critical region, and we therefore reject the null hypothesis.  
+  
+(c) As a comparison, one carries out an empirical bootstrap simulation for the
+nonpooled studentized mean difference. The bootstrap approximations for
+the critical values are $c_l^*=-2.004$ and $c_u^*=2.133$. Report your conclusions
+about the salaries on the basis of the bootstrap results.  
+  
+*Solution*:  
+The test statistic for the nonpooled studentised mean difference is
+$$
+T_d=\frac{(\bar{X}_n-\bar{Y}_m)-(\mu_X-\mu_Y)}{S_d}
+$$
+where
+$$
+S_d^2=\frac{S_X^2}{n}+\frac{S_Y^2}{m}.
+$$
+Under the $H_0$, $\mu_X-\mu_Y=0$, so our realisation is
+$$
+t_d=\frac{\bar{x}_n-\bar{y}_m}{\sqrt{\frac{s_x^2}{n}+\frac{s_y^2}{m}}}=-2.130204.
+$$
+This is less than $c_l^*$, and therefore we reject the null hypothesis. The salaries for the two occupations are different.  
+  
+# 5. Bootstrapping in two-sample tests (R)  
+For the `babies` (`UsingR`) data set, the variable `age` contains the recorded mom’s
+age and `dage` contains the dad´s age for several different cases in the sample.
+Do a significance test of the null hypothesis of equal age against a one-sided
+alternative that dads are older in the sample population. Use a non-normal
+model with bootstrapping.  
+  
+*Solution*:  
+As it isn't specified in the question, I assume unequal variance in the mom's and dad's ages. The test statistic to be bootstrapped is
+$$
+T_d=\frac{(\bar{X}_n-\bar{Y}_m)-(\mu_X-\mu_Y)}{S_d}
+$$
+where
+$$
+S_d^2=\frac{S_X^2}{n}+\frac{S_Y^2}{m}.
+$$
+```{r}
+moms <- babies$age # X
+dads <- babies$dage # Y
+
+x_bar <- mean(moms)
+y_bar <- mean(dads)
+x_var <- var(moms)
+y_var <- var(dads)
+n <- length(moms)
+m <- length(dads)
+
+t_d_s_samples <- c()
+for (i in 1:10000) {
+  bootstrapped_moms <- sample(moms, n, replace=TRUE)
+  bootstrapped_dads <- sample(dads, m, replace=TRUE)
+  
+  x_bar_s <- mean(bootstrapped_moms)
+  y_bar_s <- mean(bootstrapped_dads)
+  x_sd_s <- sd(bootstrapped_moms)
+  y_sd_s <- sd(bootstrapped_dads)
+  
+  s_d_s_sq <- ((x_sd_s^2) / n) + ((y_sd_s^2) / m)
+  t_d_s <- ( (x_bar_s - y_bar_s) - (x_bar - y_bar) ) / sqrt(s_d_s_sq)
+  
+  t_d_s_samples <- c(t_d_s_samples, t_d_s)
+}
+```
+If the dads are older, that means that the numbers will tend towards the negative. That means we need to find the critical value $c_l^*$ such that $\mathrm{P}(T_d^*\leq c_l^*)=\alpha$ where I choose $\alpha=0.05$.  
+```{r}
+c_l_s <- quantile(t_d_s_samples, 0.05)
+cat("Critical value:", c_l_s)
+```
+Now we just compare it with the actual test statistic.
+```{r}
+t_d <- (x_bar - y_bar) / sqrt( (x_var/n) + (y_var/m) )
+cat("Realised test statistic:",t_d)
+```
+This is significantly lower than the critical value, so the dads are definitely older than the moms.
