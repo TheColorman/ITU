@@ -296,7 +296,7 @@ coeffs <- coefficients(fit)
 estimate_mpg <- function(x) {
   return(coeffs[1] + coeffs[2]*x)
 }
-hp <- 255
+hp <- 225
 cat("The estimated mileage for a car with", hp, "horsepower is", estimate_mpg(hp))
 ```
 c.  

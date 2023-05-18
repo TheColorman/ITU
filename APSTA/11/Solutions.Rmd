@@ -12,7 +12,7 @@ The formula for the $100(1-\alpha)\%$ confidence interval for normal distributio
 $$
 \left(\bar{x}_n-z_{\alpha/2}\frac{\sigma}{\sqrt{n}},\bar{x}_n+z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\right).
 $$
-Since we want $93\%$, we set $\alpha=0.03$. The mean is $\bar{x}_n=507$, samples $n=36$ and the standard deviation $\sigma=7$. That makes our $97\%$ confidence interval
+Since we want $97\%$, we set $\alpha=0.03$. The mean is $\bar{x}_n=507$, samples $n=36$ and the standard deviation $\sigma=7$. That makes our $97\%$ confidence interval
 $$
 \left(507-z_{0.015}\frac{7}{6},507+z_{0.015}\frac{7}{6}\right).
 $$
@@ -79,9 +79,9 @@ qnorm(1-(0.01/2))
 ```
 The critical value is 2.576. We can then insert the numbers:
 $$
-n\geq\left(\frac{2\cdot2.576\cdot0.01}{0.001}\right)^2=51.52
+n\geq\left(\frac{2\cdot2.576\cdot0.01}{0.001}\right)^2=51.52^2=2654.3104
 $$
-The minimum number of samples is 52.  
+The minimum number of samples is 2655   .  
   
 # 4. Cats & confidence (R)  
 The `cats` data set (available in `UsingR`) contains the bodyweight and heart weight of adult cats, along with
