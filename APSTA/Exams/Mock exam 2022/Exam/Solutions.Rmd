@@ -1,0 +1,183 @@
+---
+title: "APSTA 2022 Mock Exam solutions"
+output: pdf_document
+---
+# 1. Probability Theory  
+Consider an experiment where you flip a fair coin four times.  
+(a) Define a natural sample space $\Omega$ for this experiment.  
+*Solution*:  
+$$
+\begin{aligned}
+\Omega=&\\
+&\{(H,H,H,H), (H,H,H,T), (H,H,T,H), (H,H,T,T), \\
+&(H,T,H,H), (H,T,H,T), (H,T,T,H), (H,T,T,T),  \\
+&(T,H,H,H), (T,H,H,T), (T,H,T,H), (T,H,T,T),  \\
+&(T,T,H,H), (T,T,H,T), (T,T,T,H), (T,T,T,T)\}
+\end{aligned}
+$$
+  
+(b) Write down the set of outcomes corresponding to each of the following events  
+- A: "We get exactly one tails"  
+- B: "The coin always comes with the same side up"  
+*Solution*:  
+- A: $\{(H,H,H,T), (H,H,T,H), (H,T,H,H), (T,H,H,H)\}$  
+- B: $\{(H,H,H,H), (T,T,T,T)\}$  
+  
+(c) Summarise in words the meaning of the event $A\cup B$.  
+*Solution*:  
+$A\up B$ is the union of events $A$ and $B$. The resulting event occurs *either* $A$ or $B$ occurs. (e.g. logical "or" operator).  
+  
+(d) Compute the probability for the event $C=(A\cup B)^C$.  
+*Solution*:  
+I first union the two sets of events:  
+$$
+\begin{aligned}
+A\cup B&=\{(H,H,H,T), (H,H,T,H), (H,T,H,H), (T,H,H,H)\}\cup\{(H,H,H,H), (T,T,T,T)\} \\
+&=\{(H,H,H,T), (H,H,T,H), (H,T,H,H), (T,H,H,H), (H,H,H,H), (T,T,T,T)\}
+\end{aligned}
+$$
+The probability of this occurring is $\frac{|A\cup B|}{|\Omega|}$, which is $\frac{3}{8}$. The complement of this is $1-\frac{3}{8}=\frac{5}{8}$, so $P((A\cup B)^c)=\frac{5}{8}$.  
+  
+# 2. Expectation, Variance, Discrete Distributions  
+Let us consider the experiment of independently throwing two fair dice characterised by the discrete
+random variables $X$ and $Y$, respectively. The discrete random variables $X$ and $Y$ take the values
+$a=1,2,3,\dots,6$ and $b=1,2,3,\dots,6$, respectively.  
+(a) Compute the expected value for the product $Z=XY$.  
+*Solution*:  
+The expected value of the product of two independent random variables is simply the product of their individual expectations. Since they have the same expectation, as they have the same distribution, $E[XY]=(E[X])^2$.  
+This expectation is
+$$
+\begin{aligned}
+E[X]&=\frac{1}{6}+\frac{2}{6}+\frac{3}{6}+\frac{4}{6}+\frac{5}{6}+\frac{6}{6} \\
+&=\frac{1+2+3+4+5+6}{6}=\frac{21}{6}=3.5
+\end{aligned}
+$$
+Therefore, 
+$$
+E[Z]=\left(\frac{21}{6}\right)^2=\frac{21^2}{6^2}=\frac{441}{36}=12.25
+$$
+  
+(b) Write down the probability mass function for the the (sic) discrete random variable $Z$ defined by the product $Z=XY$.  
+*Solution*:  
+Where $p_X(a)=P(X=a)$, $p_Z(a)=P(Z=a)=P(XY=a)$. We can calculate this by taking all possible values for $X$ and $Y$:  
+```
+         X
+  | X*Y | 1 | 2  | 3  | 4  | 5  | 6  |
+  |  1  | 1 | 2  | 3  | 4  | 5  | 6  |
+  |  2  | 2 | 4  | 6  | 8  | 10 | 12 |
+Y |  3  | 3 | 6  | 9  | 12 | 15 | 18 |
+  |  4  | 4 | 8  | 12 | 16 | 20 | 24 |
+  |  5  | 5 | 10 | 15 | 20 | 25 | 30 |
+  |  6  | 6 | 12 | 18 | 24 | 30 | 36 |
+```
+Then we can get the probabilities of each value based on how many times it shows up:  
+```
+| a    |  1   |  2   |  3   |  4   |  5   |  6   |  8   |  9   |  10  |
+| p(a) | 1/36 | 2/36 | 2/36 | 3/36 | 2/36 | 4/36 | 2/36 | 1/36 | 2/36 |
+| a    |  12  |  15  |  16  |  18  |  20  |  24  |  25  |  30  |  36  |
+| p(a) | 4/36 | 2/36 | 1/36 | 2/36 | 2/36 | 2/36 | 1/36 | 2/36 | 1/36 |
+```
+
+(c) Compute the variance of the product $Z=XY$.  
+*Solution*:  
+One of the formulas for variance is $Var(Z)=E[Z^2]-(E[Z])^2$. Part of this can be filled out from the previous calculation.  
+$$
+Var(Z)=E[Z^2]-(E[Z])^2=E[Z^2]-(12.25)^2=E[Z^2]-150.0625.
+$$
+$E[Z^2]$ can be calculated using the change of variable formula, which states
+$$
+E[g(X)]=\sum_i g(a_i)P(X=a_i)
+$$
+where each $a_i$ is a value that $X$ takes.  
+So,
+$$
+\begin{aligned}
+E[Z^2]&=\sum_i a_i^2P(Z=a_i) \\
+&=1^2\cdot\frac{1}{36}+2^2\cdot\frac{2}{36}+\dots+30^2\cdot\frac{2}{36}+36^2\cdot\frac{1}{36} \\
+&=230.02\bar{7}
+\end{aligned}
+$$
+This can be inserted into the equation, and we get the variance:
+$$
+Var(Z)=E[Z^2]-150.0625=230.02\bar{7}-150.0625=79.9652\bar{7}
+$$
+So $Var(Z)\approx80$.  
+  
+# 3. Maximum likelihood  
+Let $x_1,x_2,\dots,x_n$ be a dataset that is a realisation of a random sample from a $U(\alpha,\beta)$ distribution,
+where $\alpha$ and $\beta$ are the unknown parameters.  
+(a) Write down the likelihood function of the parameters.  
+*Solution*:  
+Since the distribution has two unknown variables, this will be a likelihood function of multiple parameters. The likelihood function is defined by
+$$
+L(\alpha,\beta)=f_{(\alpha,\beta)}(x_1)\dots f_{(\alpha,\beta)}(x_n)
+$$
+where each $f_{(\alpha,\beta)}(x)$ is the $U(\alpha,\beta)$ PDF:
+$$
+f_{(\alpha,\beta)}(x)=\frac{1}{\beta-\alpha}.
+$$
+  
+(b) Determine the maximum likelihood estimates for the parameters $\alpha$ and $\beta$.  
+*Solution*:  
+Since $\ln(f_{(\alpha,\beta)}(x))=-\ln(\beta-\alpha)$, one finds for the loglikelihood that
+$$
+\ell(\alpha,\beta)=-n\ln(\beta-\alpha)
+$$
+The partial derivatives of $\ell$ are
+$$
+\begin{aligned}
+\frac{\partial\ell}{\partial\alpha}&=\frac{n}{\beta-\alpha} \\
+\frac{\partial\ell}{\partial\beta}&=-\frac{n}{\beta-\alpha}
+\end{aligned}
+$$
+Solving for $\frac{\partial\ell}{\partial\alpha}=0$ and $\frac{\partial\ell}{\partial\beta}=0$ yields
+$$
+\text{it doesnt work :(}
+$$
+  
+# 4. Small R Problems  
+(a) The data set `firstchi` (`UsingR`) contains the age of the mother at birth of the first child. Investigate
+the data set by computing several simple statistics on this data set. Summarise your findings.  
+*Solution*:  
+```{r, echo=FALSE}
+library(UsingR)
+summary(firstchi)
+sd(firstchi)
+```
+As the mean is slightly higher than the median, the distribution is slightly right-leaning. We can also see from the standard deviation that roughly 68% of the women were between the ages of 17 and 30, assuming normality.  
+  
+(b) The data set `rat` (`UsingR`) contains the survival times of 20 rats exposed to radiation. Visualise
+the data in appropriate means and discuss in the light of the data and your knowledge, what kind
+of parametric model would you choose for the distribution of the survival times.  
+*Solution*:  
+```{r}
+plot(density(rat))
+```
+This distribution vaguely resembles the normal distribution, with a right lean.  
+  
+(c) Consider the dataset `kid.weights` (`UsingR`), that reports information about a sample of 250 kids.
+Select the kids up until 9 years old (i.e. with an age strictly less than 108 months). Plot a scatter
+plot of the weight versus the height. Compute a linear regression model and add the regression line
+to the plot. What conclusions can you derive?  
+*Solution*:  
+```{r}
+youngins <- kid.weights[kid.weights$age < 108,]
+cool_line <- lm(youngins$height ~ youngins$weight)
+
+plot(youngins$weight, youngins$height)
+abline(cool_line)
+cool_line
+```
+Without doing any statistical tests, the plot seems to show a pretty strong correlation between weight and height. Based on the knowledge of the data though, it is probably not weight that causes height, but rather age that causes both.  
+  
+(d) Assume that you have implemented a scientific method that you compare to the state-of-the-art published 
+elsewhere. You use the evaluation metric $G$ where a bigger value refers to a better outcome. Using 
+independent experiments you get five scores for the state-of-the-art (0.908,0.915,0.908,0.905,0.904)
+and five for your method (0.910,0.914,0.909,0.914,0.910). State the null and alternative hypothesis
+and test if there is statistical evidence that your method is better than the state-of-the-art.
+*Solution*:  
+The null hypothesis is that the methods are equal, and the alternate is that they are not.  
+```{r}
+t.test(c(0.908, 0.915, 0.908, 0.905, 0.904), c(0.910, 0.914, 0.909, 0.914, 0.910), alternative="two.sided")
+```
+p is not small enough to reject null hypothesis, our model is probably just as good as the state-of-the-art.
