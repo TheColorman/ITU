@@ -1,0 +1,71 @@
+---
+title: "Bootstrapping - solutions"
+author: "Anna Maria Gnat"
+date: "2023-05-29"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# BOOTSTRAPPING
+
+### Mock 2022 - 5. Bootstrapping and confidence intervals (8 pts)
+
+Let us look at the datasets `female.inc` `(UsingR)` that contain income
+distribution for females in 2001. You may ignore the information about
+the race of the individuals. Your goal is to estimate the mean female
+income together with its 95% confidence intervals.
+
+(a) Why is bootstrapping a good strategy for finding the confidence
+    intervals for the mean female income? (1pt)
+
+(b) Write a computer program that computes the bootstrap estimates for
+    the 95% confidence intervals for the mean income of all the females
+    in the dataset. (5pts)
+
+(c) Report your numerical results for the mean and confidence interval
+    together with a graphic illustrating the bootstrapped sample. (2pts)
+
+### Mock 2020 - 5.Bootstrapping (6pt)
+
+The variable weight in kid.weights (UsingR) data set contains the
+weights of a random sample of children. Make a computer program that
+finds the mean weight of 2-year-olds and its 90% confidence interval by
+assuming non-normal weight distribution, hence, you will need to use
+bootstrapping. Hint: You'll need to extract the 2-year-olds' data first.
+
+### Exam 2019 - 5. Bootstrapping (8 pts)
+
+Let us look at the datasets BushApproval and ObamaApproval (UsingR). On
+the basis of the datasets, you want to find if there is evidence of
+President Bush being more approved than President Obama.
+
+(a) (1pt) Formulate the appropriate null hypothesis and alternative
+    hypothesis.
+
+(b) (1pt) Why is bootstrapping a good strategy for testing the
+    hypothesis?
+
+(c) (5pts) Make a program that tests the null hypothesis by
+    bootstrapping.
+
+(d) (1pt) Report your conclusions at significance level $\alpha = 0.05$.
+
+### Exam 2017 - 5. Bootstrapping (8pts)
+
+Let us look the at the datasets BushApproval and ObamaApproval (UsingR)
+in more detail. On the basis of the data set, you want to find if there
+is evidence of President Bush being more approved than President Obama.
+
+(a) (1pt) Formulate the appropriate null hypothesis and alternative
+    hypothesis.
+
+(b) (1pt) Why is bootstrapping a good strategy for testing the
+    hypothesis?
+
+(c) (5pt) Make a program that tests the null hypothesis by
+    bootstrapping.
+
+(d) (1pt) Report your conclusions at significance level $\alpha = 0.05$.

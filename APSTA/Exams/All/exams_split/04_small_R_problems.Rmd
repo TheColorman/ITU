@@ -1,0 +1,258 @@
+---
+title: "Small R problems - solutions"
+author: "Anna Maria Gnat"
+date: "2023-05-29"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# SMALL R PROBLEMS
+
+### Mock 2023 - 4. Small R Problems (6 pts)
+
+(a) (2pts) The historical data set `Langren1644` (`HistData`) contains
+    the all the available estimates, in 1644, for the distance of Toldeo
+    and Rome in longitude. Compute simple statistics such as mean,
+    median, min, and max and standard deviation on the longitude. What
+    can you conclude from these numbers?
+
+(b) (2pts) The data set `iq` (\`UsingR) contains simulated IQ scores.
+    Find the 95% confidence interval for the mean (simulated) IQ by
+    assuming that this dataset is a random sample from a normal
+    distribution with *unknown* standard deviation.
+
+*Hint*: you have to translate the correct formula for the confidence
+intervals to R code. In particular, condsider that the distribution
+generating the samples is normal and that its standard deviation (and
+hence the variance) is unknown (even though you can compute an estimate
+for it from the data).
+
+(c) The data set emissions (UsingR) contains the information of CO2
+    emissions of different countries for 1999. Use a linear regression
+    model to model the CO2 emission as a function of GDP per capita.
+    Visualise the model together with the observations. What can you
+    conclude from your results?
+
+### Mock 2022 - 4. Small R Problems (8 pts)
+
+(a) The data set `firstchi (UsingR)` contains the age of the mother at
+    birth of the first child. Investigate the data set by computing
+    several simple statistics on this data set. Summarise your findings.
+    (2 pts)
+
+(b) The data set `rat (Using R)` contains the survival times of 20 rats
+    exposed to radiation. Visualise the data in appropriate means and
+    discuss in the light of the data and your knowledge, what kind of
+    parametric model would you choose for the distribution of the
+    survival times. (2 pts)
+
+(c) Consider the dataset `kid.weights (UsingR)`, that reports
+    information about a sample of 250 kids. Select the kids up until 9
+    years old (i.e. with an age strictly less than 108 months). Plot a
+    scatter plot of the weight versus the height. Compute a linear
+    regression model and add the regression line to the plot. What
+    conclusions can you derive? (2 pts)
+
+(d) Assume that you have implemented a scientific method that you
+    compare to the state-of-the-art published elsewhere. You use the
+    evaluation metric $G$ where a bigger value refers to a better
+    outcome. Using independent experiments you get five scores for the
+    state-of-the-art (0.908,0.915,0.908,0.905,0.904) and five for your
+    method (0.910,0.914,0.909,0.914,0.910). State the null and
+    alternative hypothesis and test if there is statistical evidence
+    that your method is better than the state-of-the-art. (2 pts)
+
+### Mock 2021 - 4. Small R Problems (8 pts)
+
+Below the data sets are found in the packages specified in parenthesis.
+For instance, Langren1644 (HistData) refers to the Langren1644 data set
+in the package HistData.
+
+(a) Simple statistics (2pts) The historical data set Langren1644
+    (HistData) contains the all the available estimates, in 1644, for
+    the distance of Toldeo and Rome in longitude. Compute simple
+    statistics such as mean, median, min, and max and standard deviation
+    on the longitude. What can you conclude from these numbers?
+
+(b) Data Exploration (2pts) The data set ozonemonthly (UsingR) contains
+    a time series showing ozone values at Haley Bay in Antarctica.
+    Visualize the data in appropriate means and discuss what you can
+    learn from this data set.
+
+(c) Linear Regression (2pts) The data set emissions (UsingR) contains
+    the information of CO2 emissions of different countries for 1999.
+    Use a linear model to model the CO2 emission as a function of GDP
+    per capita. Visualise the model together with the observations. What
+    can you conclude from your results?
+
+(d) Confidence Intervals (2pts) The data set iq (UsingR) contains
+    simulated IQ scores. Does the data seem normally distributed? Find
+    the 95% confidence interval for the mean (simulated) IQ.
+
+### Re-exam 2020 - 4.Small R Problems (6 pts)
+
+(a) Simple statistics (2pts) The data set firstchi (UsingR) contains the
+    age of the mother at birth of the first child. Investigate the data
+    set by computing several simple statistics on this data set.
+    Summarise your findings.
+
+(b) Data Exploration (2pts) The data set ewr (UsingR) contains taxi in
+    and taxi out times for 8 different airlines at Newark airport for
+    1999-2001. Visualise the data set in a suitable fashion and state
+    your conclusions about the taxi in and out times related to the
+    airport.
+
+(c) Confidence Intervals (2pts) The data set galton (UsingR) is a
+    dataframe containing child's a height and midparet height. Does the
+    data seem normally distributed? Find the mean and 95% confidence
+    interval for the child height and midparent height.
+
+### Exam 2020 - 4 Small R Problems (8 pts)
+
+Below the data sets are found in the packages specified in parenthesis.
+For instance, Langren1644 (HistData) refers to the Langren1644 data set
+in the package HistData.
+
+(a) Simple statistics (2pts)
+
+The historical data set Langren1644 (HistData) contains the all the
+available estimates, in 1644, for the distance of Toldeo and Rome in
+longitude. Compute simple statistics such as mean, median, min,and max
+and standard deviation on the longitude. What can you conclude from
+these numbers?
+
+(b) Data Exploration (2pts)
+
+The data set ozonemonthly (UsingR) contains a time series showing ozone
+values at Haley Bay in Antarctica. Visualise the data in appropriate
+means and discuss what you can learn from this data set.
+
+(c) Linear Regression (2pts)
+
+The data set emissions (UsingR) contains the information of CO2
+emissions of different countries for 1999. Use a linear model to model
+the CO2 emission as a function of GDP per capita. Visualise the model
+together with the observations. What can you conclude from your results?
+
+(d) Confidence Intervals (2pts)
+
+The data set iq (UsingR) contains simulated IQ scores. Does the data
+seem normally distributed? Find the 95% confidence interval for the mean
+(simulated) IQ.
+
+### Mock 2020 - 4.Small R Questions (6pt)
+
+(4a) Correlation (2pt)
+
+The maydow (UsingR) data set contains the Dow Jones industrial average
+and the maximum daily temperature in New York City for May 2003. Make a
+scatter plot of the industrial average against the maximum temperature.
+Are the Dow Jones index and the temperature correlated?
+
+(4b) Simple statistics (2pt)
+
+The babies (Using R) data set is a collection of variables taken for
+each new mother in a study. The variable age contains the mothers age in
+years if known, otherwise the value is 99. Compute the minimum, maximum,
+mean, median, and standard deviation of those mothers' age which are
+known. What can you conclude of the age distribution on the basis of
+these numbers?
+
+(4c) Linear Regression (2pt)
+
+The data set wellbeing (UsingR) contains factors affecting people's
+happiness in several countries. Fit a linear model with the alcohol
+consumption as the explanatory variable, and estimate how many
+percentage the well-being is increased, in the reported units, if the
+alcohol consumption is decreased from 16 to 8 units.
+
+### Exam 2019 - 4. Small R Problems (8 pts)
+
+(a) (2 pts) The dataset Orange (UsingR) contains information about the
+    growth of orange trees. Summarise the circumference of these trees
+    by reporting the minimum, maximum, mean, standard deviation, and
+    median. What can you say about the distribution of the
+    circumferences on the basis of these numbers?
+
+(b) (2 pts) Consider the father.son (UsingR) dataset, which contains
+    information about the height of fathers and their sons. Plot the
+    kernel density estimate of the height of fathers and the kernel
+    density estimate of the height of sons. What can you conclude from
+    the plots?
+
+(c) (2 pts) Consider the dataset kid.weights (UsingR), that reports
+    information about a sample of 250 kids. Select the kids up until 9
+    years old (i.e. with an age strictly less than 108 months). Plot a
+    scatter plot of the weight versus the height. Compute a linear
+    regression model and add the regression line to the plot. What
+    conclusions can you derive?
+
+(d) (2 pts) The data set normtemp (UsingR) contains measurements of 130
+    healthy, randomly selected individuals in Fahrenheit. The variable
+    temperature contains normal body temperature. Assume that the data
+    is normally distributed. Test the hypothesis that the normal
+    temperature has the mean at 37 °C. The Fahrenheit can be converted
+    Celsius degrees by the formula TC = 5/9\*(TF - 32).
+
+### Mock 2019 - 3 Small R Questions (8pt)
+
+(a) Correlation (2pt)
+
+The `maydow (UsingR)` data set contains the Dow Jones industrial average
+and the maximum daily temperature in New York City for May 2003. Make a
+scatter plot of the industrial average against the maximum temperature.
+Are the Dow Jones index and the temperature correlated?
+
+(b) Simple statistics (2pt)
+
+The `babies (Using R)` data set is a collection of variables taken for
+each new mother in a study. The variable `age` contains the mothers age
+in years if known, otherwise the value is 99. Compute the minimum,
+maximum, mean, median, and standard deviation of those mothers' age
+which are known. What can you conclude of the age distribution on the
+basis of these numbers?
+
+(c) Linear Regression (2pt)
+
+The data set `wellbeing (UsingR)` contains factors affecting people's
+happiness in several countries. Fit a linear model with the alcohol
+consumption as the explanatory variable, and estimate how many
+percentage the well-being is increased, in the reported units, if the
+alcohol consumption is decreased from 16 to 8 units.
+
+(d) Confidence intervals (2pt)
+
+The variable `weight` in `kid.weights (UsingR)` data set contains the
+weights of a random sample of children. Find a 90% confidence interval
+for the mean weight of 5-year-olds. You'll need to isolate just the
+5-year-olds' data first.
+
+### Exam 2017 - 4. Small R Questions (8pt)
+
+(4a) Simple statistics (2pts) In the datasets BushApproval and
+ObamaApproval (UsingR) the variables approval are collections of
+approval ratings of President Bush and President Obama. Summarise and
+compare the approval ratings by computing suitable simple statistics.
+Which one of the presidents seems more popular?
+
+(4b) Data Exploration (2pts) The dataset cancer (UsingR) contains
+survival times (days) of patients with five different cancer types. What
+can you conclude about the survival times of each cancer types on the
+basis of your knowledge and this data set?
+
+(4c) Linear Regression (2pts) In the dataset Prostitutes (HistData) the
+variable count indicates the number of prostitutes in Paris between the
+years 1812-1854. Fit a linear model to the observations, plot the number
+of prostitutes as a function of time together with the regression line.
+Predict for how many prostitutes there are in Paris today according to
+the model. What would you say about the validity of the prediction you
+made?
+
+(4d) Hypothesis testing (2pts) The dataset carbon (UsingR) contains
+carbon monoxide (Monoxide) at different sites (Site). Is there
+significant difference in the mean of the monoxide measurements between
+the sites 1 and 3? Assume that both samples are normally distributed
+with equal variances.

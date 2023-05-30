@@ -1,0 +1,95 @@
+---
+title: "Maximum likelihood - solutions"
+author: "Anna Maria Gnat"
+date: "2023-05-29"
+output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# MAXIMUM LIKELIHOOD
+
+### Mock 2023 - 3. Maximum Likelihood (6 pts)
+
+Let $x_1, x_2, x_3, \ldots, x_N$ be a dataset where all the observations
+are independent and identically distributed (i.i.d.) following a
+continuous distribution with the probability density function
+$f_\alpha(x)$ given by $$
+  f_{\alpha}(x)= \begin{cases} \mathrm{e}^{-(x-\alpha)} \quad  & \textrm{for } x \geq \alpha, \\
+  0, \quad & x < \alpha,
+  \end{cases}
+$$ where $\alpha$ is a parameter.
+
+(a) (2pt) Write down the likelihood function $L(\alpha)$ corresponding
+    to the dataset above.
+
+(b) (4pts) Determine the maximum likelihood estimate for $\alpha$.
+
+### Mock 2022 - 3. Maximum likelihood (4pts)
+
+Let $x_1$, $x_2$, $\ldots$, $x_n$ be a dataset that is a realisation of
+a random sample from a $U(\alpha,\beta)$ distribution, where $\alpha$
+and $\beta$ are the unknown parameters.
+
+(a) Write down the likelihood function of the parameters. (2pts)
+
+(b) Determine the maximum likelihood estimates for the parameters
+    $\alpha$ and $\beta$. (2pts)
+
+#### Solution
+
+(a) PDF of the uniform distribution:
+
+\$\$
+
+```         
+f(x) = 
+\begin{cases}
+\frac{1}{\beta - \alpha} \quad for \quad \alpha \leq x \leq \beta\\
+0 \quad \quad otherwise
+\end{cases}
+```
+
+\$\$
+
+$L(\alpha, \beta) = \prod^{n}_{i = 1} \frac{1}{\beta_i - \alpha_i} \quad for \quad \alpha \leq x \leq \beta$\\
+or\\
+$$L(\alpha,\beta)=\prod_{i=1}^n f(x_i;\alpha,\beta)$$
+(b) 
+
+
+
+### Mock 2021 - 3. Maximum likelihood (6pts)
+
+Let us consider a random process that is a sequence of independent
+random variables Z1, Z2, Z3, . . . so that for each i the value of Zi is
+either 1, 2, or 3. For all values of i the probability p that Zi = 1 is
+the same. Likewise, for all values of i the probability q that Zi = 2 is
+the same. Now, assume that you have a sequence of 100 observations from
+a such process.
+
+(a) Write down the likelihood function of the data given the parameters.
+    (2pts)
+
+(b) Derive the maximum likelihood estimator for the parameters p and q.
+    (4pts)
+
+### Exam 2020 - 3 Maximum likelihood (6pts)
+
+Let us consider a random process that is a sequence of independent
+random variables $Z_1, Z_2, Z_3, ...$ so that for each i the value of
+$Z_i$ is either 1,2, or 3. For all values of i the probability p that
+$Z_i$ =1 is the same. Like wise, for all values of i the probability q
+that $Z_i$= 2 is the same. Now, assume that you have a sequence of 100
+observations from a such process.
+
+(a) Write down the likelihood function of the data given the parameters.
+    (2pts)
+
+(b) Derive the maximum likelihood estimator for the parameters p and q.
+    (4pts)

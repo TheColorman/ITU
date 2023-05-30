@@ -1,0 +1,92 @@
+---
+title: "Simulation - solutions"
+author: "Anna Maria Gnat"
+date: "2023-05-29"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# SIMULATION
+
+### Mock 2019 - 4 Viking Lottery (8pt)
+
+In Viking Lottery one may select 6 numbers from 1 to 48 and an extra
+"Viking" number from 1 to 8. Make a program that simulates the lottery
+by drawing six numbers from 1 to 48 without replacement and an
+independent Viking number from 1 to 8. Choose your luck row of numbers
+and simulate the lottery by playing it 100 times. How much would you
+have got as a profit? Assume that playing one row costs 80 cents.
+
+| Hits (normal + Viking number) |        Wins |
+|-------------------------------|------------:|
+| 6+1                           | € 1 000 000 |
+| 6+0                           |   € 250 000 |
+| 5+1                           |    € 10 000 |
+| 5+0                           |     € 1 000 |
+| 4+1                           |        € 50 |
+| 4+0                           |        € 25 |
+| 3+1                           |         € 8 |
+| 3+0                           |         € 4 |
+
+### Re-exam 2020 - 5. Simulation (8 pts)
+
+The Monte Carlo method refers to a numerical method of solving
+mathematical problems by random sampling or by the simulation of random
+variables. Monte Carlo methods all share the concept of using randomly
+drawn samples to compute a solution to a given problem. Let us assume
+that you can only rely on basic arithmetic operations such as addition,
+subtraction, multiplication and division, but you have an access to
+uniformly distributed random numbers. You would like to implement a
+computer program that computes a Monte Carlo, numerical estimate for
+$\sqrt{2}$.
+
+(a) Explain how the problem can be solved by a Monte Carlo method.
+    (2pts)
+
+(b) Implement a computer program that computes a Monte Carlo estimate
+    for $\sqrt{2}$. (5pts)
+
+(c) How many random numbers do you need to draw in order to find 4 digit
+    accuracy for your estimate? You can evaluate against the reference
+    value $\sqrt{2} \approx 1.4142$ here. (1pt) 3 Hint: For a
+    non-negative real number x, $x < \sqrt{2} \iff x^2 < 2$
+
+### Mock 2020 - 2. Football Betting (8pt)
+
+Imagine a football betting setting where there are 13 football games.
+Each game can have three possible outcomes: home team wins (1), the
+teams play even (E) or the visitor team wins (2). Model the outcome of
+each game as a random process where each of the three outcomes are
+equally probable and independent from other games. Let the random
+variable X characterise the number of correct guesses for the 13
+outcomes in one betting.
+
+(a) (1pt) Write the analytic forms for the probability mass function of
+    X.
+
+(b) (1pt) Illustrate the probability mass function by plotting it in a
+    figure.
+
+(c) (1pt) What is the probability that one get all the 13 outcomes
+    right?
+
+(d) (3pt) Simulate the betting by "playing" the betting 100 times.
+    Present the results you got.
+
+<!-- -->
+
+e)  (2pt) Assume, one betting costs 0.5 EUR. How would you characterise
+    your chances of getting profit by betting in these games by guessing
+    the results in random? Assume that wins are distributed according to
+    the table below (price is in EUR).
+
+| Hits |  Price |
+|------|-------:|
+| 13   | 113101 |
+| 12   |   7761 |
+| 11   |    373 |
+| 10   |     63 |
+

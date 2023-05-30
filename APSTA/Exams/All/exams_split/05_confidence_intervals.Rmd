@@ -1,0 +1,41 @@
+---
+title: "Confidence intervals - solutions"
+author: "Anna Maria Gnat"
+date: "2023-05-29"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# CONFIDENCE INTERVALS
+
+### Exam 2019 - 3.Confidence intervals (3 pts)
+
+You are performing an experiments, and you know that your results are a
+random sample taken from a normal distribution with standard deviation
+$\sigma = 2.2$.
+
+(a)(2 pt) Suppose your random sample has size 30, with sample mean
+$\bar{x}_{30} = 12.4$. Compute a two-sided 95% confidence interval for
+the mean.
+
+(b) (1 pt) Suppose you want the two-sided 95% confidence interval to
+    have width $\leq 0.5$. How many samples do you need to take at
+    least?
+
+### Exam 2017 - 3. Confidence intervals (5pt)
+
+Suppose that you want to examine the amount of caffeine in a cup of
+espresso from Café Analog. In a sample of 10 cups, the average measured
+caffeine contents is $\bar{x}_{10}= 62.9$ (mg) and the sample standard
+deviation is $s_{10} = 5.8$ (mg). You may assume that the measurements
+are a realization of a random sample form an $N(\mu, \sigma^2)$
+distribution.
+
+(a) (3pts) Construct a 95% confidence interval for $\mu$.
+
+(b) (2pts) Assuming that the standard deviation is $\sigma = 5$ (mg),
+    how many measurements do we need, if we want a 95% confidence
+    interval for the mean $\mu$ no wider than 1 (mg)?

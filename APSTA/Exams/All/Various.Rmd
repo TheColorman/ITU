@@ -1,0 +1,170 @@
+---
+title: "Various exam questions"
+output: pdf_document
+---
+2 Football Betting (8pt)
+Imagine a football betting setting where there are 13 football games. Each game can have three possible
+outcomes: home team wins (1), the teams play even (E) or the visitor team wins (2). Model the outcome
+of each game as a random process where each of the three outcomes are equally probable and independent
+from other games. Let the random variable X characterise the number of correct guesses for the 13
+outcomes in one betting.
+a) (Ipt) Write the analytic forms for the probability mass function of X.  
+*Solution*:  
+bla bla
+$$
+p(a)=\left(\frac{2}{3}\right)^{13-a}\cdot\left(\frac{1}{3}\right)^a
+$$
+  
+b) (Ipt) Illustrate the probability mass function by plotting it in a figure.  
+*Solution*:  
+```{r}
+prob <- function(a) {
+  return(
+    (
+      (2/3)^(13-a)
+    ) * (
+      (1/3)^a
+    )
+  )
+}
+
+probs <- c()
+for (i in 0:13) {
+  prub <- prob(i)
+  probs <- c(probs, prub)
+}
+
+plot(y=probs, x=0:13)
+```
+  
+
+c) (Ipt) What is the probability that one get all the 13 outcomes right?  
+*Solution*:  
+```{r}
+prob(13) 
+```
+  
+d) (3pt) Simulate the betting by "playing" the betting 100 times. Present the results you got.  
+*Solution*:  
+```{r}
+game_result <- function() {
+  res <- runif(1, min=-1, max=1)
+  return(round(res))
+}
+
+setting_result <- function() {
+  game_results <- c()
+  for (i in 1:13) {
+    game_results <- c(game_results, game_result())
+  }
+  return(game_results)
+}
+
+bet_res <- c()
+for (i in 1:100) {
+  set <- setting_result()
+  bet <- setting_result()
+  bet_res <- c(bet_res, sum(set == bet))
+}
+
+summary(bet_res)
+sd(bet_res)
+plot(density(bet_res))
+```
+  
+e) (2pt) Assume, one betting costs 0.5 EUR. How would you characterise your chances of getting profit by betting in these games by guessing the results in random? Assume that wins are distributed
+according to the table below (price is in EUR).  
+```
+| Hits | Price  |
+| 13   | 113101 | 
+| 12   | 7761   |
+| 11   | 373    |
+| 10   | 63     |
+```
+*Solution*:  
+```{r}
+total_cost <- 100*0.5
+total_profit <- 0
+for (i in 1:100) {
+  res <- bet_res[i]
+  if (res == 10) {
+    total_profit = total_profit + 63
+  } else if (res == 11) {
+    total_profit = total_profit + 373
+  } else if (res == 12) {
+    total_profit = total_profit + 7761
+  } else if (res == 13) {
+    total_profit = total_profit + 113101
+  }
+}
+net_gain <- total_profit - total_cost
+sprintf("Total profit: %s", total_profit)
+sprintf("Net gain: %s", net_gain)
+```
+Expected value calculation. First make new random variable, $Y$. It a discrete random variable with same distribution as $X$ that gives the money gained from a betting round. It takes the numbers 0 to 13, indicating number of correct guesses, and gives out the prizes defined in the table above.
+$$
+\begin{aligned}
+E[Y]&=\sum_i a_ip(a) \\
+&=\left(\frac{2}{3}\right)^{13}\cdot\left(\frac{1}{3}\right)^0\cdot0+\left(\frac{2}{3}\right)^{12}\cdot\left(\frac{1}{3}\right)^1\cdot0+\dots \\
+&+\left(\frac{2}{3}\right)^{1}\cdot\left(\frac{1}{3}\right)^{12}\cdot7761+\left(\frac{2}{3}\right)^0\cdot\left(\frac{1}{3}\right)^{13}\cdot113101 \\
+&=\left(\frac{2}{3}\right)^3\cdot\left(\frac{1}{3}\right)^{10}\cdot63+\left(\frac{2}{3}\right)^2\cdot\left(\frac{1}{3}\right)^{11}\cdot373 \\
+&+\left(\frac{2}{3}\right)^1\cdot\left(\frac{1}{3}\right)^{12}\cdot7761+\left(\frac{2}{3}\right)^0\cdot\left(\frac{1}{3}\right)^{13}\cdot113101 \\
+&=\frac{130619}{1594323}\approx0.0819
+\end{aligned}
+$$
+Expected value for playing is 0.0819 euro. Seeing as it also costs 0.5 euro to play, it means that our actual expected value is $0.0819-0.5=-0.4181$, that is, we loose money. Don't gamble kids.  
+  
+# Maximum likelihood
+Let $x_1, x_2, x_3, \dots, x_n$ be a dataset where all the observations are independent and identically distributed
+(i.i.d.) following a continuous distribution with the probability density function $f_a(x)$ given by  
+$$
+f_a(x)=
+\begin{cases}
+  \mathrm{e}^{-(x-\alpha)}&\text{for }x\geq\alpha, \\
+  0, & x<\alpha,
+\end{cases}
+$$
+where $\alpha$ is a parameter.  
+(a) (2pt) Write down the likelihood function $L(\alpha)$ corresponding to the dataset above.  
+*Solution*:  
+The likelihood function is given by
+$$
+\begin{aligned}
+  f_\alpha(x_1)f_\alpha(x_2)f_\alpha(x_3)\dots f_\alpha(x_n)= \\
+  \begin{cases}
+    \mathrm{e}^{-(x_1-\alpha)}\mathrm{e}^{-(x_2-\alpha)}\dots\mathrm{e}^{-(x_n-\alpha)} & \text{if } x_i\geq\alpha~\forall~x, \\
+    0 & \text{if } x_i<\alpha~\forall~x
+  \end{cases}
+\end{aligned}
+$$
+  
+(b) (4pts) Determine the maximum likelihood estimate for $\alpha$.  
+*Solution*:
+To find the MLE, we need to get the derivative of the likelihood function.  
+$$
+\begin{aligned}
+\frac{dL(\alpha)}{d\alpha}&=\frac{d}{d\alpha}\left[\mathrm{e}^{-x_1+\alpha}\cdot\mathrm{e}^{-x_2+\alpha}\dots\mathrm{e}^{-x_n+\alpha}\right] \\
+&=\frac{d}{d\alpha}\left[\mathrm{e}^{-x_1+\alpha}\right]\cdot\frac{d}{d\alpha}\left[\mathrm{e}^{-x_2+\alpha}\right]\dots\frac{d}{d\alpha}\left[\mathrm{e}^{-x_n+\alpha}\right] \\
+&=\mathrm{e}^{\alpha-x_1}\mathrm{e}^{\alpha-x_2}\dots\mathrm{e}^{\alpha-x_n}
+\end{aligned}
+$$
+We can take the loglikelihood to simplify the equation:
+$$
+\begin{aligned}
+\ell(\alpha)&=\ln\left(\frac{d}{d\alpha}\left[L(\alpha)\right]\right) \\
+&=\ln\left(\mathrm{e}^{\alpha-x_1}\mathrm{e}^{\alpha-x_2}\dots\mathrm{e}^{\alpha-x_n}\right) \\
+&=\ln\left(\mathrm{e}^{\alpha-x_1}\right)+\ln\left(\mathrm{e}^{\alpha-x_2}\right)+\dots+\ln\left(\mathrm{e}^{\alpha-x_n}\right) \\
+&=\alpha-x_1+\alpha-x_2+\dots+\alpha-x_n \\
+&=n\cdot\alpha-x_1-x_2-\dots-x_n
+\end{aligned}
+$$
+Now we set it equal to zero and solve for $\alpha$.  
+$$
+\begin{aligned}
+n\cdot\alpha-x_1-x_2-\dots-x_n&=0 \Leftrightarrow \\
+n\cdot\alpha&=x_1+x_2+\dots+x_n \Leftrightarrow \\
+\alpha&=\frac{x_1+x_2+\dots+x_n}{n} \Leftrightarrow \\
+\alpha&=\bar{x}_n
+\end{aligned}
+$$
+The only critical point in this function is when $\alpha$ equals the sample mean. Since that is the only point, it must be the maximum. 

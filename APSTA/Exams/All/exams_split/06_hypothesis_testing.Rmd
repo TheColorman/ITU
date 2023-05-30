@@ -1,0 +1,155 @@
+---
+title: "Hypothesis testing"
+author: "Anna Maria Gnat"
+date: "2023-05-29"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# HYPOTHESIS TESTING
+
+### Mock 2023 - 5. Hypothesis testing (8 pts)
+
+Consider a practical situation that you evaluate two brands of ice cream
+A and B. The reported weight of each ice cream package is nominally the
+same (100g) but after consuming of the two brands, you feel that the ice
+cream A runs out earlier than the ice cream B. To investigate if your
+feeling is suggesting right, you want to make a statistical test
+evaluating if there is less ice cream in the brand A package when
+compared to the brand B package. To do the testing, you have 5 packages
+from each ice cream brand, and you weigh them to get the measurements
+$W_A=(99.2,100.5,98.9,99.6,97.7)$ for the brand A and
+$W_B=(100.5,100.1,99.1,98.2,98.3)$ for the brand B, where the
+measurements are in grams.
+
+(a) (1pt) Formulate the appropriate null hypothesis and alternative
+    hypothesis.
+(b) (1pt) Why is bootstrapping a good strategy for testing the
+    hypothesis, if compared to t-testing?
+(c) (5pts) Make a program that tests the null hypothesis by
+    bootstrapping.
+(d) (1pt) Report your conclusions at significance level $\alpha = 0.05$.
+
+### Mock 2021 - 5. Bootstrapping & Hypothesis testing (8 pts)
+
+The data set chicken (UsingR) contains the weight gain of chicken fed
+with three different rations. You would like to find if there is
+statistical evidence that the ration 2 gave more weight gain than
+ration1.
+
+(a) Formulate the appropriate null hypothesis and alternative
+    hypothesis. (1pt)
+
+(b) Why is bootstrapping a good strategy in testing the hypothesis?
+    (1pt)
+
+(c) Make a program that tests the null hypothesis by bootstrapping.
+    (5pts)
+
+(d) Report your conclusions at significance level $\alpha$ = 0.05. (1pt)
+
+### Re-exam 2020 - 3.Hypothesis testing (6pts)
+
+The paired test is an another from of hypothesis testing that suites for
+a situation when two samples depend on each other is some way, for
+instance, the samples from twin studies. Two paired samples can be
+compared by a one-sample test. For paired samples x1, x2, . . . , xn and
+y1, y2, . . . , yn (where (xi , yi), i = 1, 2, . . . , n are the pairs)
+one then considers the differences x1 - y1, x2 - y2, . . . , xn - yn
+(instead of incorrectly using the two-sample test with the assumption of
+two independent sets of samples). Consider the data babies (UsingR). The
+variable age contains the mom's age and dage the corresponding (paired)
+dad's age. You would like to assess if there is statistical evidence
+that the child's mum is younger than child's dad.
+
+(a) Formulate the appropriate null hypothesis and alternative
+    hypothesis. (2pts)
+
+(b) Which test is appropriate for testing the hypothesis? Explain why.
+    (2pts)
+
+(c) Do the test and report your conclusion at significance level
+    $\alpha$ = 0.05. (2pts) Hint: if the age of the mum or dad is
+    unknown it is indicated by the age 99 in the dataset, you need to
+    filter out these first, for instance, by filtered.babies \<-
+    subset(babies,age\<99 & dage\<99).
+
+### Exam 2020 - 5 Bootstrapping & Hypothesis testing (8 pts)
+
+The data set chicken (UsingR) contains the weight gain of chicken fed
+with three different rations. You would like to find if there is
+statistical evidence that the ration 2 gave more weight gain than ration
+1.
+
+(a) Formulate the appropriate null hypothesis and alternative
+    hypothesis. (1pt)
+
+(b) Why is bootstrapping a good strategy in testing the hypothesis?
+    (1pt)
+
+(c) Make a program that tests the null hypothesis by bootstrapping.
+    (5pts)
+
+(d) Report your conclusions at significance level $\alpha$ = 0.05. (1pt)
+
+### Mock 2020 - 3. Hypothesis Testing (6pt)
+
+According to the Danish ministry of education, when the Danish 7-point
+grading scale (consisting of the grades -3, 00, 02, 4, 7, 10 and 12) is
+used nationally and over a long period of time, the mean pass grade
+should be 7. In the year 2028 you are looking at the grades for the 681
+student who have passed the course in Applied Statistics at ITU in the
+past 10 years. The sample mean and sample standard deviation of the
+grades are x¯681 = 7.15 and s681 = 3.07. You observe that that the
+sample mean is higher than 7, so you decide to investigate if the mean
+grade for the Applied Statistics course may be different from 7 using
+hypothesis testing. With 681 observations you can assume that this is a
+large sample size.
+
+(a) (1pt) Formulate an appropriate null hypothesis and alternative
+    hypothesis.
+
+(b) (1pt) Which test is appropriate for testing the hypothesis? Explain
+    why.
+
+(c) (2pt) Compute the value of the test statistic and report your
+    conclusion at significance level $\alpha$ = 0.05.
+
+(d) (2pt) Compute the corresponding one-tailed p-value. Is the evidence
+    against the null hypothesis strong?
+
+### Mock 2019 - 2 Hypothesis Testing (8pt)
+
+According to the Danish ministry of education, when the Danish 7-point
+grading scale (consisting of the grades $-3$, $00$, $02$, $4$, $7$, $10$
+and $12$) is used nationally and over a long period of time, the mean
+pass grade should be $7$. In the year 2028 you are looking at the grades
+for the $681$ student who have passed the course in Applied Statistics
+at ITU in the past 10 years. The sample mean and sample standard
+deviation of the grades are $\bar{x}_{681} = 7.15$ and $s_{681} = 3.07$.
+You observe that that the sample mean is higher than 7, so you decide to
+investigate if the mean grade for the Applied Statistics course may be
+different from $7$ using hypothesis testing. With 681 observations you
+can assume that this is a large sample size.
+
+(a) (1pt) Formulate an appropriate null hypothesis and alternative
+    hypothesis.
+
+Null hypothesis -\> $H_0: \mu=7$
+
+Alternate hypothesis -\> $H_1: \mu > 7$
+
+(b) (1pt) Which test is appropriate for testing the hypothesis? Explain
+    why.
+
+we use a one sample t-test; as we have a large sample size, we assume it
+follows a standard normal distribution
+
+(c) (3pt) Compute the value of the test statistic and report your
+    conclusion at significance level $\alpha = 0.05$.
+
+(d) (3pt) Compute the corresponding one-tailed $p$-value. Is the
+    evidence against the null hypothesis strong?

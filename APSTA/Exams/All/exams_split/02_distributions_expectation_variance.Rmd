@@ -1,0 +1,165 @@
+---
+title: "Distributions, expectation, variance - solutions"
+author: "Anna Maria Gnat"
+date: "2023-05-29"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Mock 2023 - 2. Continuous distributions, Expectation, Variance (6 pts)
+
+Let $X$ be a continuous random variable with the probability density function
+
+$$
+  f_{X}(x)= \begin{cases} \frac{3}{4}(1-x^2), \quad  & x \in [-1,1], \\
+  0, \quad & \textrm{otherwise}.
+  \end{cases}
+$$
+
+(a) (2pts) Compute the expected value of $X$.
+
+(b) (2pts) Compute the variance of $X$.
+
+(c) (2pts) Compute the probability $P(X>0.5)$.
+
+#### Solution
+
+(a) 
+
+```{r}
+# function to integrate
+integrand<-function(x){x*(3/4)*(1-x^2)}
+
+#integrate the function
+integral <- integrate(integrand,lower=-1,upper=1)
+integral
+```
+
+General formula: $E[X] = \int_{-\infty}^{\infty}xf_X(x) dx$\
+We are only interested in range [-1, 1] as the function is 0 otherwise:\
+$$E[X] = \int_{-1}^{1}x * \frac{3}{4}(1-x^2) dx = \frac{3}{4}\int_{-1}^1 (x - x^3) dx = \frac{3}{4}[\frac{x^2}{2}-\frac{x^4}{4}]_{-1}^1 = 0$$
+
+(b) 
+
+```{r}
+# function to integrate
+integrand<-function(x){x^2*(3/4)*(1-x^2)}
+
+#integrate the function
+integral <- integrate(integrand,lower=-1,upper=1)
+integral
+```
+
+General formula: ${Var}[X] = E[X^2]-(E[X])^2$\
+$E[X^2] = \int_{-1}^{1}x^2 * \frac{3}{4}(1-x^2) dx =0.2$ ${Var}[X] = 0.2 -(0)^2 = 0.2$
+
+(c) 
+
+```{r}
+# function to integrate
+integrand<-function(x){(3/4)*(1-x^2)}
+
+#integrate the function
+integral <- integrate(integrand,lower=0.5,upper=1)
+integral
+```
+
+$P(X>0.5) = \int_{0.5}^{1}x * \frac{3}{4}(1-x^2) dx = 0.15625$
+
+### Mock 2022 - 2. Expectation, Variance, Discrete Distributions (6 pts)
+
+Let us consider the experiment of independently throwing two fair dice characterised by the discrete random variables $X$ and $Y$, respectively. The discrete random variables $X$ and $Y$ take the values $a=1,2,3,\ldots,6$ and $b=1,2,3,\ldots,6$, respectively.
+
+(a) Compute the expected value for the product $Z=XY$. (2pts)
+
+(b) Write down the probability mass function for the the discrete random variable $Z$ defined by the product $Z=XY$. (2pts)
+
+(c) Compute the variance of the product $Z=XY$. (2pts)
+
+#### Solution
+
+(a) 
+
+$Z=XY$\
+Since X and Y are independent, the expectation of Z is: $E[Z] = E[X] * E[Y]$ $E[X] = \sum_{i} a_i* p(a_i) = 1 * \frac{1}{6} + 2 * \frac{1}{6} + 3 * \frac{1}{6} + 4 * \frac{1}{6} + 5 * \frac{1}{6} + 6 * \frac{1}{6} = \frac{21}{6} = \frac{7}{2}$\
+$E[Z] = \frac{7}{2} * \frac{7}{2} = \frac{49}{4}$
+
+(b) 
+
+Possibles outcome of X\*Y are:
+
+```{r}
+outcomes <- outer(c(1,2,3,4,5,6), c(1,2,3,4,5,6), "*")
+outcomes
+x <- table(outcomes)
+x
+```
+
+Therefore the PMF for Z is: $$
+p(c) =P(Z=c) = 
+\begin{cases} 
+\frac{1}{36} & \text{when } c=1,9,16,25,36\\
+\frac{1}{18} & \text{when } c=2,3,5,8,10,15,18,20,24,30\\
+\frac{1}{12} & \text{when } c=4\\
+\frac{1}{9} & \text{when } c=6,12\\
+0 & \text{otherwise.}
+\end{cases}.
+$$ (c) Formula for variance: $Var(Z) = E[Z^2] - (E[Z])^2$\
+We need to calculate $E[Z^2]$ which $= E[X^2] * E[Y^2]$ and $(E[Z])^2 = (E[XY])^2$\
+$E[X^2]= E[Y^2] = \frac{1}{6}*(1^2 + 2^2 + 3^2 + 4^2 + 5^2 + 6^2) =* \frac{1}{6}(91) = \frac{91}{6}$\
+$E[Z^2] = E[X^2]* E[Y^2] = (\frac{91}{6})^2 = \frac{8281}{36}$\
+From task b)\
+$(E[Z])^2 = (E[XY])^2 = (\frac{49}{4})^2 = \frac{2401}{16}$\
+Now, the $Var(Z)$ is:\
+$Var(Z) = \frac{8281}{36} - \frac{2401}{16} \approx 79.965$
+
+### Mock 2021 - 2. Expectation, Joint Distributions, Independence (5 pts)
+
+Let (X, Y ) be a pair of continuous random variables with the joint density function:
+
+$$
+  f_{}(x,y)= \begin{cases} 1  \quad & if \quad (x,y) \in [0,1] \times [1,2] \\
+  0, \quad & \textrm{otherwise}.
+  \end{cases}
+$$
+
+(a) Compute the expected value of the vector (X, Y ). (1pt)
+
+(b) Compute the covariance between the the random variables X and Y. AreX and Y correlated? (2pts)
+
+(c) Find the the marginal densities of the random variables X and Y. Are X and Y are independent? (2pts)
+
+### Re-exam 2020 - 2.Continuous Random Variable (6 pts)
+
+Assume that the score a student can get in an exam is a real number in the interval [0,100], and the student passes the exam if the score is at least 55. Assume that we model the score of the exam by the random variable X that has the probability density function Certainly! Here's the formula written in LaTeX: $$
+f(x) = \begin{cases}
+x - \frac{{4p}}{{5}}, & \text{for } 80p < x \leq 80p + 10 \\
+-\frac{{x}}{{100}} + \frac{{4p}}{{5}} + \frac{{1}}{{5}}, & \text{for } 80p + 10 < x < 80p + 20 \\
+0, & \text{otherwise}
+\end{cases}
+$$ where p, 0 $\le$ p $\le$ 1 is a parameter that describes how well the student prepared for the exam: p = 0 refers to no preparation and p = 1 excellent preparation. Assume that p = 0.5, i.e., the student did not prepare very well. Using this model, compute
+
+(a) the expected score the student will get, and (3pts)
+
+(b) the probability that the student will pass the exam. (3pts)
+
+### Exam 2020 - 2 Expectation, Joint Distributions, Independence (5 pts)
+
+Let (X, Y ) be a pair of continuous random variables with the joint density function
+
+$$
+f(x,y) = \begin{cases} 1 & if (x,y) \in [0,1] x [1,2]\\
+0 &otherwise 
+\end{cases} 
+$$
+
+(a) Compute the expected value of the vector (X, Y ). (1pt)
+
+(b) Compute the covariance between the the random variables X and Y. Are X and Y correlated? (2pts)
+
+<!-- -->
+
+c)  Find the the marginal densities of the random variables X and Y. Are X and Y are independent? (2pts)

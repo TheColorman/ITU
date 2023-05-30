@@ -1,0 +1,207 @@
+---
+title: "Probability Theory - solutions"
+author: "Anna Maria Gnat"
+date: "2023-05-28"
+output: pdf_document
+---
+
+# PROBABILITY THEORY
+
+### Mock 2023 - 1. Probability Theory (6 pts)
+
+Consider an experiment of throwing a fair, four-sided die until get the number '4'. The outcome of the experiment is the number throws it took.
+
+(a) (1 pt) Define a natural sample space $\Omega$ for this experiment, or in other words, a sample space $\Omega$ that allows modeling all possible outcomes of this experiment"?
+
+(b) (2 pts) Write down the set of outcomes corresponding to each of the following events
+
+-   $A$: "The number of throws is even."
+-   $B$: "It took at least 3 throws."
+
+(c) (3pts) What is the probability of the event $A \cap B^\mathrm{C}$?
+
+#### Solution
+
+(a) The sample space is: $\Omega = \{1, 2, ..., \infty\}$ (only natural numbers).
+
+(b) The sets of outcomes are:
+
+-   $A = \{2, 4, \ldots, \infty\}$
+-   $B = \{3, 4,\ldots, \infty \}$
+
+(c) $B^c = \{1, 2\}$ $A \cap B^\mathrm{C} = \{2\}$ The event occurs only if it took exactly 2 throws to get a 4. Therefore the probability of this event is: $P(A \cap B^\mathrm{C}) = \frac{3}{4}*\frac{1}{4} = \frac{3}{16}$
+
+### Mock 2022 - 1. Probability Theory (6 pts)
+
+Consider an experiment where you flip a fair coin four times.
+
+(a) (1 pt) Define a natural sample space $\Omega$ for this experiment.
+
+(b) (2 pts) Write down the set of outcomes corresponding to each of the following events
+
+-   A: "We get exactly one tails"
+-   B: "The coin always comes with the same side up."
+
+(c) (1 pt) Summarise in words the meaning of the event $A \cup B$.
+
+(d) (2 pts) Compute the probability for the event $C=(A \cup B)^c$.
+
+#### Solution
+
+(a) The sample space is: $\Omega = \{HHHH, HHHT, HHTT, HTTT, HTHH, HHTH, HTHT, HTTH, TTTT, TTTH, TTHH, THHH, THTT, THTH, THHT\}$
+
+```{r}
+outcomes <- expand.grid(coin1 = c("H", "T"),
+                        coin2 = c("H", "T"),
+                        coin3 = c("H", "T"),
+                        coin4 = c("H", "T"))
+
+all_possibilities <- apply(outcomes, 1, paste, collapse = "")
+
+print(all_possibilities)
+
+```
+
+(b) $A = \{THHH, HTHH, HHTH, HHHT\}$\
+    $B = \{HHHH, TTTT\}$
+
+(c) The event $A \cup B$ means that either A or B can happen, so either we get exactly one tails or we get all heads or all tails.
+
+(d) $C=(A \cup B)^c$\
+    From the example above, we can see that $P(A \cup B) = \frac{6}{16}$. Therefore $P(C) = 1 - \frac{6}{16} = \frac{10}{16} = \frac{5}{8}$
+
+### Mock 2021 - 1. Probability Theory (5 pts)
+
+Assume that you pick two marbles, one at the time and without replacement, from a bag that contains many blue (B), and many red (R) marbles. Further assume that, in the beginning there are N \> 2 blue marbles and M \> 2 red marbles in the bag.
+
+(a) What is the sample space of the experiment? (1pt)
+
+(b) List all the outcomes where blue marble is obtained at the first pick. What is the probability of this event? (1pt)
+
+(c) What is the probability of the event picking first blue then red? (1pt)
+
+(d) List all the outcomes where a red marble is picked after picking a blue. What is the probability of picking red marble as the second conditioned to that the first one is blue? (1pt)
+
+(e) What is the probability of the event picking the same colour for both the two marbles? (1pt)
+
+#### Solution
+
+(a) The sample space is: $\Omega = \{BB, RR, BR, RB\}$
+(b) A: blue marbles obtained at first pick $A = \{BR, BB\}$ $P(A) = \frac{N}{N+M}$
+(c) B: picking first blue, then red $P(B) = \frac{N}{N+M} * \frac{M}{N+M-1}$
+
+### Re-exam 2020 - 1. Probability Theory (6 pts)
+
+A ball is drawn at random from an urn initially containing one red (R) and one green ball (G). If the green ball is drawn, it is put back into the urn. If a red ball is drawn, it is put back into the urn together with an additional red ball. One then repeats the drawing two more times in the same way without returning to the initial condition between the draws.
+
+(a) What is the sample space of the experiment? (1pt)
+
+(b) What is the probability of getting a green ball in all the three draws? (1pt)
+
+(c) What is the probability of getting red ball in all the three draws? (1pt)
+
+(d) What is the probability of getting a green ball on the second draw conditioned on that the first drawn ball is red? (1pt)
+
+(e) What is the probability of getting two red balls and one green ball in the experiment when the order does not matter? List all the possible outcomes that yield the result. (2pts)
+
+### Exam 2020 - 1 Probability Theory (5 pts)
+
+a.  Assume that you pick two marbles, one at the time and without replacement, from a bag that contains many blue (B), and many red (R) marbles. Further assume that, in the beginning there are N \> 2 blue marbles and M \> 2 red marbles in the bag.
+
+b.  What is the sample space of the experiment? (1pt)
+
+c.  List all the outcomes where blue marble is obtained at the first pick. What is the probability of this event? (1pt)
+
+d.  What is the probability of the event picking first blue then red? (1pt)
+
+e.  List all the outcomes where a red marble is picked after picking a blue. What is the probability of picking red marble as the second conditioned to that the first one is blue? (1pt)
+
+f.  What is the probability of the event picking the same colour for both the two marbles? (1pt)
+
+### Mock 2020 - 1. Probability (8pt)
+
+Consider an experiment where you twice roll a fair die with four sides. The values on the sides of the die are 1, 2, 3 and 4.
+
+(a) (1pt) Choose a natural sample space for this experiment.
+
+(b) (1pt) Write down the set of outcomes corresponding the each of the following events • A : "the sum of the two die rolls is greater than or equal to 6" • B : "the value of the first roll is strictly smaller than the value of the second roll" • C : "the values of the fist and second roll are the same"
+
+(c) (1pt) Calculate the probability of the three events above, that is P(A), P(B) and P(C).
+
+(d) (2pt) Explain in words what the probability P(A\|C) means and calculate the probability P(A\|C). Now consider an experiment where you roll the die 10 times. Let X be the random variable representing the number of times you roll a 2.
+
+(e) (3pt) What is the distribution of X? What is the probability of rolling a 2 exactly 5 times in 10 rolls, i.e. P(X = 5)?
+
+### Exam 2019 - 1. Probability Theory (6 pts)
+
+Consider an experiment where you flip a fair coin three times.
+
+(a) (1 pt) Define a natural sample space for this experiment.
+
+(b) (2 pts) Write down the set of outcomes corresponding to each of the following events
+
+• A: "We get at least one tails"
+
+• B: "The coin always comes with the same side up."
+
+(c) (1 pt) Summarize in words the meaning of the event $A \cap B$.
+
+(d) (2 pts) Compute the probability for the event $$C = (A \cup B)^c$$
+
+### Exam 2019 - 2.Conditional probability (5 pts)
+
+Your company builds metal detectors for airports, to be used at the security control before boarding airplanes. A person walking has a probability 0.1 of wearing a metal object while going through the metal detector, an event that we denote with M (with MC we denote the complement of M). Therefore we have that P[M] = 0.1. When the metal detector detects a metal object, it flashes a light, an event that we denote with T. The metal detector is built in a way such that
+
+• P[T\|M] = 0.7 • P[T\|M\^c ] = 0.4
+
+(a) (2pts) Compute the probability that a person is actually carrying a metal object if the metal detector flashes the light, that is compute P[M\|T].
+
+(b) (2pts) Given the result of the previous calculation, the metal detector you are producing is likely to form long lines at the airport, making everybody unhappy. You have a limited budget, that you can either spend to to increase P[T\|M] or to decrease P[T\|M\^c]. Before deciding where to spend your money, you want to be sure that any change will have a positive effect. Suppose you set P[T\|M] = 1, leaving P[T\|M\^c ] = 0.4. What is now the value of P[M\|T]?
+
+(c) (1pt) Your goal is to obtain a metal detector such that P[M\|T] $\geq$ 0.9. How small do you need to make P[T\|M\^c ] (while maintaining P[T\|M] = 0.7)?
+
+### Mock 2019 - 1 Probability Theory (8pt)
+
+Consider an experiment where you twice roll a fair die with four sides. The values on the sides of the die are 1, 2, 3 and 4.
+
+(a) (1pt) Choose a natural sample space $\Omega$ for this experiment.
+
+(b) (1pt) Write down the set of outcomes corresponding the each of the following events
+
+-   $A$ : "the sum of the two die rolls is greater than or equal to 6"
+-   $B$ : "the value of the first roll is strictly smaller than the value of the second roll"
+-   $C$ : "the values of the fist and second roll are the same"
+
+(c) (1pt) Calculate the probability of the three events above, that is $P(A)$, $P(B)$ and $P(C)$.
+
+(d) (2pt) Explain in words what the probability $P(A | C)$ means and calculate the probability $P(A | C)$.
+
+Now consider an experiment where you roll the die 10 times. Let $X$ be the random variable representing the number of times you roll a 2.
+
+(e) (3pt) What is the distribution of $X$? What is the probability of rolling a 2 exactly 5 times in 10 rolls, i.e. $P(X=5)$?
+
+### Exam 2017 - 1. Probability Theory (5pts)
+
+Consider an experiment where you are flipping a coin four times.
+
+(a) (1pt) Choose a natural sample space Ω for this experiment.
+
+(b) (1pt) Write down the set of outcomes corresponding to each of the following events
+
+• A : "we throw tails at least three times"
+
+• B : "both the first and the last throw results in tails"
+
+(c) (1pt) Assuming that the coin is fair, calculate the probability of the event $A \cap B$.
+
+(d) (2pts) Now, suppose that the coin is biased such that heads is three times more likely than tails. What is the probability of tails?
+
+### Exam 2017 - 2.Conditional probability (6pts)
+
+Suppose that you are testing bicycle racers for use of EPO doping in the Tour de France with a urine test. Let E be the event that "a bicyclist is doped using EPO", and let T be the event that "the urine test indicates that the bicyclist is doped with EPO". Suppose that 10% of the bicyclists in the Tour de France are doped using EPO and that the test has the properties P(T \| E) = p and P(T \| Ec) = 1 - p.
+
+(a) (1pt) Describe in words the meaning of P(E \| T) and P(E \| Tc).
+
+(b) (2pts) Compute P(E \| T) if p = 0.92 and comment on the credibility of the test.
+
+(c) (3pts) Find p such that P(E \| T) = 0.95.
