@@ -1,4 +1,4 @@
 To run an sql script with command line.
 ```
-psql -U postgres -f .\exercises.sql -d W01
+psql -U postgres -f ./file.sql -d DATABASE_NAME
 ```
