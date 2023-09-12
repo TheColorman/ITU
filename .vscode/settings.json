@@ -1,3 +1,25 @@
 {
-    "deepscan.enable": true
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "W01",
+            "username": "postgres",
+            "password": "postgres",
+            "database": "W01"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "HW1",
+            "group": "ITU",
+            "database": "HW1",
+            "username": "postgres",
+            "password": "postgres"
+        }
+    ]
 }
