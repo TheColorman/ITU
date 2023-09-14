@@ -8,11 +8,12 @@
             "name": "W01",
             "username": "postgres",
             "password": "postgres",
-            "database": "W01"
+            "database": "W01",
+            "group": "ITU"
         },
         {
             "previewLimit": 50,
-            "server": "localhost",
+            "server": "100.101.102.110",
             "port": 5432,
             "driver": "PostgreSQL",
             "name": "HW1",

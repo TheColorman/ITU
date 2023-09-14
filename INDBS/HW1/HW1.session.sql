@@ -33,24 +33,50 @@ AND I2.role = 'actor';
 
 
 -- (5) Of all the movies produced in 2002, there are 11 that have only one actor involved in them. How many movies produced in 2010 have only one actor involved in them?
-SELECT movieid FROM involved
-JOIN movie ON movie.id = involved.movieid
-WHERE 
-    involved.role = 'actor'
-    AND movie.year = 2010
-GROUP BY movieid
-HAVING COUNT(personid) = 1;
+SELECT COUNT(*) FROM (
+    SELECT movieid FROM involved
+    JOIN movie ON movie.id = involved.movieid
+    WHERE 
+        involved.role = 'actor'
+        AND movie.year = 2010
+    GROUP BY movieid
+    HAVING COUNT(personid) = 1
+) tmp;
 
 --- (6) In the database, there are 16 cases where a specific actor and director have collaborated together on 12 movies. How many are the cases where a specific actor and director collaborated together in more than 12 movies?
-SELECT I1.personid
-FROM involved I1
-JOIN involved I2 ON
-    I1.movieid = I2.movieid
-WHERE 
-    I1.role = 'actor'
-    AND I2.role = 'director'
-    AND I1.personid != I2.personid
-GROUP BY I1.personid, I2.personid
-HAVING COUNT(*) >= 12;
+SELECT COUNT(*) FROM (
+    SELECT I1.personid
+    FROM involved I1
+    JOIN involved I2 ON
+        I1.movieid = I2.movieid
+    WHERE 
+        I1.role = 'actor'
+        AND I2.role = 'director'
+        AND I1.personid != I2.personid
+    GROUP BY I1.personid, I2.personid
+    HAVING COUNT(*) > 12
+) tmp;
 
 -- (7) Of all the movies produced in 2010, there are 237 that have entries registered in involved for all roles defined in the roles relation. How many movies produced in 2000 have entries registered in involved for all roles defined in the roles relation? Note: This is a relational division query that must work for any instance; Do not use any ‘magic numbers’.
+SELECT COUNT(*) FROM (
+    SELECT movieid FROM involved
+    JOIN movie ON movie.id = movieid
+    WHERE year = 2000
+    GROUP BY movieid
+    HAVING COUNT(DISTINCT involved.role) = (
+        SELECT COUNT(*) FROM role
+    )
+) tmp;
+
+-- (8) The number of people who have played a role in movies of all genres in the category ‘Misc’ is 543. How many people have played a role in movies of all genres in the category ‘Popular’?
+SELECT COUNT(*) FROM (
+    SELECT personid FROM involved
+        JOIN movie_genre ON movie_genre.movieid = involved.movieid
+        JOIN genre ON genre.genre = movie_genre.genre
+    WHERE category = 'Popular' -- I don't like that I'm filter by cat twice, but not sure how to improve this
+    GROUP BY personid
+    HAVING COUNT(DISTINCT movie_genre.genre) = (
+        SELECT COUNT(DISTINCT genre) FROM genre
+        WHERE category = 'Popular'
+    )
+) tmp;
