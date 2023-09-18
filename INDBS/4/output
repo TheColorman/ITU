@@ -1,0 +1,455 @@
+        now_testing        
+---------------------------
+ 1. View AllAccountRecords
+(1 row)
+
+                             result                             
+----------------------------------------------------------------
+ This should find two accounts, 21 and 85, both of which are OK
+(1 row)
+
+ pid | aid |  sum  |  max  | case 
+-----+-----+-------+-------+------
+  50 |  85 | -4436 | -4436 | OK
+  50 |  21 |  7894 |  7894 | OK
+(2 rows)
+
+                               result                               
+--------------------------------------------------------------------
+ This should find 21 accounts with no records (check on outer join)
+(1 row)
+
+ count 
+-------
+    21
+(1 row)
+
+    now_checking     
+---------------------
+ 2. Trigger on Bills
+(1 row)
+
+BEGIN
+             result             
+--------------------------------
+ This should give error on date
+(1 row)
+
+psql:test-script.sql:30: ERROR:  literally time travel
+CONTEXT:  PL/pgSQL function checkbills() line 9 at RAISE
+ROLLBACK
+BEGIN
+              result              
+----------------------------------
+ This should give error on amount
+(1 row)
+
+psql:test-script.sql:39: ERROR:  bro how can you have a negative bill???
+CONTEXT:  PL/pgSQL function checkbills() line 4 at RAISE
+ROLLBACK
+BEGIN
+                     result                      
+-------------------------------------------------
+ This should give error as updates are forbidden
+(1 row)
+
+psql:test-script.sql:49: ERROR:  if you wanna change something then pay the fucking thing
+CONTEXT:  PL/pgSQL function checkbills() line 26 at RAISE
+ROLLBACK
+BEGIN
+                     result                      
+-------------------------------------------------
+ This should give error as deletes are forbidden
+(1 row)
+
+psql:test-script.sql:59: ERROR:  dont try to delete that shit
+CONTEXT:  PL/pgSQL function checkbills() line 15 at RAISE
+ROLLBACK
+BEGIN
+         result          
+-------------------------
+ This insert should work
+(1 row)
+
+INSERT 0 1
+            result            
+------------------------------
+ This should show one account
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+ROLLBACK
+           result            
+-----------------------------
+ This should show no account
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+         now_testing          
+------------------------------
+ 3. Trigger on AccountRecords
+(1 row)
+
+                  message                   
+--------------------------------------------
+ Creating a function to find bogus accounts
+(1 row)
+
+CREATE FUNCTION
+              result              
+----------------------------------
+ There should be 0 bogus accounts
+(1 row)
+
+ bogus 
+-------
+     0
+(1 row)
+
+BEGIN
+              result              
+----------------------------------
+ This should give error on amount
+(1 row)
+
+psql:test-script.sql:127: ERROR:  column "abal" does not exist
+LINE 1: (-NEW.ramount > abal + aov)
+                        ^
+QUERY:  (-NEW.ramount > abal + aov)
+CONTEXT:  PL/pgSQL function validateaccoundrecord() line 11 at IF
+ROLLBACK
+              result              
+----------------------------------
+ There should be 0 bogus accounts
+(1 row)
+
+ bogus 
+-------
+     0
+(1 row)
+
+BEGIN
+                     result                      
+-------------------------------------------------
+ This should give error as updates are forbidden
+(1 row)
+
+psql:test-script.sql:143: ERROR:  no updates amigo
+CONTEXT:  PL/pgSQL function validateaccoundrecord() line 31 at RAISE
+ROLLBACK
+BEGIN
+                     result                      
+-------------------------------------------------
+ This should give error as deletes are forbidden
+(1 row)
+
+psql:test-script.sql:153: ERROR:  dont try to delete that shit
+CONTEXT:  PL/pgSQL function validateaccoundrecord() line 26 at RAISE
+ROLLBACK
+BEGIN
+            result             
+-------------------------------
+ This deposit should work fine
+(1 row)
+
+psql:test-script.sql:162: ERROR:  column "abal" does not exist
+LINE 1: (-NEW.ramount > abal + aov)
+                        ^
+QUERY:  (-NEW.ramount > abal + aov)
+CONTEXT:  PL/pgSQL function validateaccoundrecord() line 11 at IF
+psql:test-script.sql:164: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:168: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:170: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:174: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+     now_testing      
+----------------------
+ 4. Function Transfer
+(1 row)
+
+BEGIN
+                          result                           
+-----------------------------------------------------------
+ Transfer from 8 to 2 should not work (insufficient funds)
+(1 row)
+
+psql:test-script.sql:185: ERROR:  function transfer(integer, integer, integer) does not exist
+LINE 1: select Transfer ( 2, 8, 1 );
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ROLLBACK
+BEGIN
+                             result                             
+----------------------------------------------------------------
+ BONUS: Transfer from 2 to 8 of negative amount should NOT work
+(1 row)
+
+psql:test-script.sql:193: ERROR:  function transfer(integer, integer, integer) does not exist
+LINE 1: select Transfer ( 2, 8, -1 );
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ROLLBACK
+BEGIN
+                    result                    
+----------------------------------------------
+ Transfer from 8 to 2 of 0 amount should work
+(1 row)
+
+psql:test-script.sql:201: ERROR:  function transfer(integer, integer, integer) does not exist
+LINE 1: select Transfer ( 8, 2, 0 );
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:test-script.sql:203: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:207: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+                  result                   
+-------------------------------------------
+ Transfer from 2 to 200000 should NOT work
+(1 row)
+
+psql:test-script.sql:215: ERROR:  function transfer(integer, integer, integer) does not exist
+LINE 1: select Transfer ( 2, 200000, 1 );
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ROLLBACK
+     now_checking     
+----------------------
+ 5. View DebtorStatus
+(1 row)
+
+          result          
+--------------------------
+ Should return 28 debtors
+(1 row)
+
+psql:test-script.sql:225: ERROR:  relation "debtorstatus" does not exist
+LINE 2: from DebtorStatus;
+             ^
+           result            
+-----------------------------
+ Two women owe more than 10K
+(1 row)
+
+psql:test-script.sql:231: ERROR:  relation "debtorstatus" does not exist
+LINE 2: from DebtorStatus
+             ^
+      now_testing      
+-----------------------
+ 6. Trigger on Persons
+(1 row)
+
+BEGIN
+         result          
+-------------------------
+ This insert should work
+(1 row)
+
+INSERT 0 1
+                              result                              
+------------------------------------------------------------------
+ This should return Gummi and one account with overdraft of 10000
+(1 row)
+
+ pid |     pname      | pgender | pheight | aid | pid |   adate    | abalance | aover 
+-----+----------------+---------+---------+-----+-----+------------+----------+-------
+  58 | Geir Bjornsson | M       |    1.82 | 100 |  58 | 2014-10-26 |        0 | 27000
+(1 row)
+
+                         result                          
+---------------------------------------------------------
+ This should return 0 account records for the new person
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ROLLBACK
+       now_testing        
+--------------------------
+ 7. Function InsertPerson
+(1 row)
+
+BEGIN
+         result          
+-------------------------
+ This insert should work
+(1 row)
+
+psql:test-script.sql:265: ERROR:  function insertperson(unknown, unknown, numeric, integer) does not exist
+LINE 1: select InsertPerson ('Gummi', 'M', 1.74, 21000);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:test-script.sql:267: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:272: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:274: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:278: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+      now_testing       
+------------------------
+ 8. Function PayOneBill
+(1 row)
+
+BEGIN
+                    result                     
+-----------------------------------------------
+ Payment of bill 12 should work (over = 22000)
+(1 row)
+
+psql:test-script.sql:289: ERROR:  function payonebill(integer) does not exist
+LINE 1: select PayOneBill ( 12 );
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:test-script.sql:291: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:295: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:297: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:301: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+                       message                        
+------------------------------------------------------
+ Making a person with two identically valued accounts
+(1 row)
+
+UPDATE 1
+      result      
+------------------
+ Note the lastval
+(1 row)
+
+ lastval 
+---------
+     206
+(1 row)
+
+             result             
+--------------------------------
+ Payment of bill 29 should work
+(1 row)
+
+psql:test-script.sql:319: ERROR:  function payonebill(integer) does not exist
+LINE 1: select PayOneBill ( 29 );
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:test-script.sql:321: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:323: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:325: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:329: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+BEGIN
+                       result                       
+----------------------------------------------------
+ Payment of bill 108 should not work (already paid)
+(1 row)
+
+psql:test-script.sql:337: ERROR:  function payonebill(integer) does not exist
+LINE 1: select PayOneBill (108);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ROLLBACK
+BEGIN
+                         result                         
+--------------------------------------------------------
+ Payment of bill 20000 should not work (does not exist)
+(1 row)
+
+psql:test-script.sql:345: ERROR:  function payonebill(integer) does not exist
+LINE 1: select PayOneBill (20000);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ROLLBACK
+BEGIN
+                     result                     
+------------------------------------------------
+ Payment of bill 3 should not work (no account)
+(1 row)
+
+psql:test-script.sql:353: ERROR:  function payonebill(integer) does not exist
+LINE 1: select PayOneBill (3);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ROLLBACK
+BEGIN
+                          result                          
+----------------------------------------------------------
+ Payment of bill 107 should not work (insufficient funds)
+(1 row)
+
+psql:test-script.sql:361: ERROR:  function payonebill(integer) does not exist
+LINE 1: select PayOneBill (107);
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ROLLBACK
+      now_testing      
+-----------------------
+ 9. Function LoanMoney
+(1 row)
+
+BEGIN
+                  result                   
+-------------------------------------------
+ Loaning a negative amount should not work
+(1 row)
+
+psql:test-script.sql:372: ERROR:  function loanmoney(integer, integer, date) does not exist
+LINE 1: select LoanMoney ( 6, -1, CURRENT_DATE );
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ROLLBACK
+BEGIN
+                   result                    
+---------------------------------------------
+ Loaning with due date today should not work
+(1 row)
+
+psql:test-script.sql:380: ERROR:  function loanmoney(integer, integer, date) does not exist
+LINE 1: select LoanMoney ( 6, 1, CURRENT_DATE );
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ROLLBACK
+BEGIN
+        result         
+-----------------------
+ This loan should work
+(1 row)
+
+psql:test-script.sql:388: ERROR:  function loanmoney(integer, integer, date) does not exist
+LINE 1: select LoanMoney ( 6, 10000, CURRENT_DATE+100 );
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:test-script.sql:390: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:392: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:394: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:test-script.sql:397: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+       now_checking       
+--------------------------
+ 10. View FinancialStatus
+(1 row)
+
+            result            
+------------------------------
+ This should return 79 people
+(1 row)
+
+psql:test-script.sql:407: ERROR:  relation "financialstatus" does not exist
+LINE 2: from FinancialStatus;
+             ^
+                       result                        
+-----------------------------------------------------
+ Return person 78 with 18073 as balance, 0 as unpaid
+(1 row)
+
+psql:test-script.sql:413: ERROR:  relation "financialstatus" does not exist
+LINE 2: from FinancialStatus
+             ^
