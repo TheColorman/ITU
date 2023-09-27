@@ -24,7 +24,7 @@
         },
         {
             "previewLimit": 50,
-            "server": "colorlaptop",
+            "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
             "name": "W04",
