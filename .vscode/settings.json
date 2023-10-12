@@ -33,5 +33,6 @@
             "username": "postgres",
             "password": "postgres"
         }
-    ]
+    ],
+    "python.languageServer": "Pylance"
 }
