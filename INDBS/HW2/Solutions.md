@@ -12,4 +12,6 @@
 (k) Y (O means overlapping)
 
 2) 
-See diagrams.net
+See 2.drawio
+
+3) See HW2.session.sql
