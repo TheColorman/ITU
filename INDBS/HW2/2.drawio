@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="BCQeyGCFUooTmkic2TfJ" name="Page-1">
-        <mxGraphModel dx="330" dy="228" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="990" dy="683" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -51,9 +51,6 @@
                 </mxCell>
                 <mxCell id="10" value="DoD" style="ellipse;whiteSpace=wrap;html=1;fontStyle=0" parent="1" vertex="1">
                     <mxGeometry x="400" y="210" width="45" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="12" value="&lt;font face=&quot;Lucida Console&quot;&gt;Person.DoD DEFAULT NULL&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;align=left;" parent="1" vertex="1">
-                    <mxGeometry x="35" y="80" width="215" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="17" value="O" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=Helvetica;fontSize=11;fontColor=default;" parent="1" vertex="1">
                     <mxGeometry x="340" y="320" width="40" height="40" as="geometry"/>
