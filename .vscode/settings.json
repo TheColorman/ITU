@@ -2,48 +2,27 @@
     "sqltools.connections": [
         {
             "previewLimit": 50,
-            "server": "localhost",
-            "port": 5432,
+            "server": "192.168.50.222",
+            "port": 22065,
             "driver": "PostgreSQL",
-            "name": "W01",
-            "username": "postgres",
-            "password": "postgres",
-            "database": "W01",
-            "group": "ITU"
-        },
-        {
-            "previewLimit": 50,
-            "server": "100.101.102.110",
-            "port": 5432,
-            "driver": "PostgreSQL",
-            "name": "HW1",
+            "name": "ex8NK",
             "group": "ITU",
-            "database": "HW1",
+            "database": "ex8nk",
             "username": "postgres",
             "password": "postgres"
         },
         {
             "previewLimit": 50,
-            "server": "localhost",
-            "port": 5432,
+            "server": "192.168.50.222",
+            "port": 22065,
             "driver": "PostgreSQL",
-            "name": "W04",
+            "name": "ex8K",
             "group": "ITU",
-            "database": "W04",
-            "username": "postgres",
-            "password": "postgres"
-        },
-        {
-            "previewLimit": 50,
-            "server": "100.101.102.110",
-            "port": 5432,
-            "driver": "PostgreSQL",
-            "name": "HW2",
-            "group": "ITU",
-            "database": "HW2",
+            "database": "ex8k",
             "username": "postgres",
             "password": "postgres"
         }
     ],
-    "python.languageServer": "Pylance"
+    "python.languageServer": "Pylance",
+    "deepscan.ignoreConfirmWarning": true
 }
