@@ -21,6 +21,17 @@
             "database": "ex8k",
             "username": "postgres",
             "password": "postgres"
+        },
+        {
+            "previewLimit": 50,
+            "server": "192.168.50.222",
+            "port": 22065,
+            "driver": "PostgreSQL",
+            "name": "HW3",
+            "group": "ITU",
+            "database": "hw3",
+            "username": "postgres",
+            "password": "postgres"
         }
     ],
     "python.languageServer": "Pylance",

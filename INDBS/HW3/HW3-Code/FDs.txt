@@ -1,0 +1,13 @@
+FD         - Assumption
+pid --> pn - PersonID --> PersonName
+hid --> hs - HouseID  --> HouseStreet
+hid --> hz - HouseID  --> HouseZip
+hid --> hc - HouseID  --> HouseCity
+hz  --> hc - HouseZip --> HouseCity
+
+People(pid, pn)
+Houses(hid, hs, hz)
+Zip(hz, hc)
+Renters(pid, hid)
+
+After this we are in BCNF as all attributes are entirely determined by their keys.
