@@ -12,7 +12,7 @@ CREATE TABLE People (
     address VARCHAR(200),
     phone VARCHAR(20), -- Plusses and parentheses
     DOB DATE,
-    DOD DATE DEFAULT NULL
+    DOD DATE
 );
 
 -- 2.
