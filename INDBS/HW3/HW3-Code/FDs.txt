@@ -8,6 +8,6 @@ hz  --> hc - HouseZip --> HouseCity
 People(pid, pn)
 Houses(hid, hs, hz)
 Zip(hz, hc)
-Renters(pid, hid)
+Renters(pid, hid, s)
 
 After this we are in BCNF as all attributes are entirely determined by their keys.

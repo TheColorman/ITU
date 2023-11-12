@@ -15,6 +15,7 @@ CREATE TABLE Houses (
 CREATE TABLE Renters (
     PersonID INT,
     HouseID INT,
+    S int,
         PRIMARY KEY (PersonID, HouseID),
         FOREIGN KEY (PersonID) REFERENCES People(ID),
         FOREIGN KEY (HouseID) REFERENCES Houses(ID)
@@ -30,4 +31,4 @@ INSERT INTO Houses
 SELECT hid, hs, hz FROM rentals
 GROUP BY hid, hs, hz;
 INSERT INTO Renters
-SELECT pid, hid FROM rentals;
+SELECT pid, hid, s FROM rentals;
