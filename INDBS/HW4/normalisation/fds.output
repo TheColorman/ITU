@@ -1,0 +1,209 @@
+          fd          |   validity    
+----------------------+---------------
+ Projects: id --> pid | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: id --> sid | does not hold
+(1 row)
+
+         fd          |   validity    
+---------------------+---------------
+ Projects: id --> sn | does not hold
+(1 row)
+
+         fd          |   validity    
+---------------------+---------------
+ Projects: id --> pn | does not hold
+(1 row)
+
+          fd          | validity 
+----------------------+----------
+ Projects: id --> mid | MAY HOLD
+(1 row)
+
+         fd          | validity 
+---------------------+----------
+ Projects: id --> mn | MAY HOLD
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: pid --> id | does not hold
+(1 row)
+
+          fd           |   validity    
+-----------------------+---------------
+ Projects: pid --> sid | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: pid --> sn | does not hold
+(1 row)
+
+          fd          | validity 
+----------------------+----------
+ Projects: pid --> pn | MAY HOLD
+(1 row)
+
+          fd           |   validity    
+-----------------------+---------------
+ Projects: pid --> mid | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: pid --> mn | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: sid --> id | does not hold
+(1 row)
+
+          fd           |   validity    
+-----------------------+---------------
+ Projects: sid --> pid | does not hold
+(1 row)
+
+          fd          | validity 
+----------------------+----------
+ Projects: sid --> sn | MAY HOLD
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: sid --> pn | does not hold
+(1 row)
+
+          fd           |   validity    
+-----------------------+---------------
+ Projects: sid --> mid | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: sid --> mn | does not hold
+(1 row)
+
+         fd          |   validity    
+---------------------+---------------
+ Projects: sn --> id | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: sn --> pid | does not hold
+(1 row)
+
+          fd          | validity 
+----------------------+----------
+ Projects: sn --> sid | MAY HOLD
+(1 row)
+
+         fd          |   validity    
+---------------------+---------------
+ Projects: sn --> pn | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: sn --> mid | does not hold
+(1 row)
+
+         fd          |   validity    
+---------------------+---------------
+ Projects: sn --> mn | does not hold
+(1 row)
+
+         fd          |   validity    
+---------------------+---------------
+ Projects: pn --> id | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: pn --> pid | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: pn --> sid | does not hold
+(1 row)
+
+         fd          |   validity    
+---------------------+---------------
+ Projects: pn --> sn | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: pn --> mid | does not hold
+(1 row)
+
+         fd          |   validity    
+---------------------+---------------
+ Projects: pn --> mn | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: mid --> id | does not hold
+(1 row)
+
+          fd           |   validity    
+-----------------------+---------------
+ Projects: mid --> pid | does not hold
+(1 row)
+
+          fd           |   validity    
+-----------------------+---------------
+ Projects: mid --> sid | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: mid --> sn | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: mid --> pn | does not hold
+(1 row)
+
+          fd          | validity 
+----------------------+----------
+ Projects: mid --> mn | MAY HOLD
+(1 row)
+
+         fd          |   validity    
+---------------------+---------------
+ Projects: mn --> id | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: mn --> pid | does not hold
+(1 row)
+
+          fd          |   validity    
+----------------------+---------------
+ Projects: mn --> sid | does not hold
+(1 row)
+
+         fd          |   validity    
+---------------------+---------------
+ Projects: mn --> sn | does not hold
+(1 row)
+
+         fd          |   validity    
+---------------------+---------------
+ Projects: mn --> pn | does not hold
+(1 row)
+
+          fd          | validity 
+----------------------+----------
+ Projects: mn --> mid | MAY HOLD
+(1 row)

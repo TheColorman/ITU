@@ -32,6 +32,17 @@
             "database": "hw3",
             "username": "postgres",
             "password": "postgres"
+        },
+        {
+            "previewLimit": 50,
+            "server": "192.168.50.222",
+            "port": 22065,
+            "driver": "PostgreSQL",
+            "name": "HW4",
+            "group": "ITU",
+            "database": "hw04",
+            "username": "postgres",
+            "password": "postgres"
         }
     ],
     "python.languageServer": "Pylance",

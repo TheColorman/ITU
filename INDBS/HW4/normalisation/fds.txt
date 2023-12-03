@@ -1,0 +1,25 @@
+Projects: id  --> mid | MAY HOLD
+Projects: id  --> mn  | MAY HOLD
+Projects: pid --> pn  | MAY HOLD
+Projects: sid --> sn  | MAY HOLD
+Projects: sn  --> sid | MAY HOLD
+Projects: mid --> mn  | MAY HOLD
+Projects: mn  --> mid | MAY HOLD
+
+Candidates:  
+Projects: id  --> mid | MAY HOLD
+Projects: id  --> mn  | MAY HOLD
+Projects: pid --> pn  | MAY HOLD
+Projects: sid --> sn  | MAY HOLD
+Projects: mid --> mn  | MAY HOLD
+
+Chains:  
+id  --> mid --> mn
+pid --> pn
+sid --> sn
+
+Decomposed:  
+Projects(id, mid)
+M(mid, mn)
+P(pid, pn)
+S(sid, sn)
