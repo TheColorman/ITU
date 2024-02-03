@@ -43,6 +43,17 @@
             "database": "hw04",
             "username": "postgres",
             "password": "postgres"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 22065,
+            "driver": "PostgreSQL",
+            "name": "Exam",
+            "group": "ITU",
+            "database": "exam",
+            "username": "postgres",
+            "password": "postgres"
         }
     ],
     "python.languageServer": "Pylance",
