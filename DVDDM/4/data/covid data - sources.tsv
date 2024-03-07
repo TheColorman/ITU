@@ -1,0 +1,16 @@
+google trends (daily 9-month limit)	https://trends.google.com/trends/explore?date=2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28&geo=IT,DE,FR,BE,NL&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
+IT - Benchmark	https://trends.google.com/trends/explore?date=2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28&geo=IT,FI,DK,NO,SE&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
+	https://trends.google.com/trends/explore?date=2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28&geo=IT,BR,PE,BO,MX&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
+	https://trends.google.com/trends/explore?date=2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28&geo=IT,GB,AU,US,CA&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
+	https://trends.google.com/trends/explore?date=2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28&geo=IT,ES,AT,CH,IE&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
+	https://trends.google.com/trends/explore?date=2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28,2019-12-31%202021-02-28&geo=IT,AE,IL,ZA,IN&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
+	
+ECDC	https://github.com/owid/covid-19-data/raw/master/public/data/ecdc/new_deaths_per_million.csv
+	https://github.com/owid/covid-19-data/raw/master/public/data/ecdc/new_cases_per_million.csv
+	
+google trends (weekly - past 5-years)	https://trends.google.com/trends/explore?date=today%205-y,today%205-y,today%205-y,today%205-y,today%205-y&geo=DE,IT,FR,BE,NL&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
+DE - Benchmark	https://trends.google.com/trends/explore?date=today%205-y,today%205-y,today%205-y,today%205-y,today%205-y&geo=DE,FI,DK,NO,SE&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
+	https://trends.google.com/trends/explore?date=today%205-y,today%205-y,today%205-y,today%205-y,today%205-y&geo=DE,BR,PE,BO,MX&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
+	https://trends.google.com/trends/explore?date=today%205-y,today%205-y,today%205-y,today%205-y,today%205-y&geo=DE,GB,AU,US,CA&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
+	https://trends.google.com/trends/explore?date=today%205-y,today%205-y,today%205-y,today%205-y,today%205-y&geo=DE,ES,AT,CH,IE&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
+	https://trends.google.com/trends/explore?date=today%205-y,today%205-y,today%205-y,today%205-y,today%205-y&geo=DE,AE,IL,ZA,IN&q=%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy,%2Fm%2F01cpyy
