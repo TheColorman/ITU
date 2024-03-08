@@ -81,7 +81,7 @@ class ClassModel(torch.nn.Module):
         # Keep only the output for the first ([CLS]) token: shape=(batch_size, DIM_EMBEDDING)
         mlm_out = mlm_out[:,:1,:].squeeze()
 
-        # Matrix multiply to get scores for each label: shape=(?,?)
+        # Matrix multiply to get scores for each label: shape=(batch_size, nlabels)
         output_scores = self.hidden_to_label(mlm_out)
 
         return output_scores
