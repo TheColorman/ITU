@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{subfiles}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{appendix}
+\usepackage{hyperref}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[
+    backend=biber,
+    style=apa
+]{biblatex}
+\usepackage[a4paper, margin=3cm]{geometry}
+\usepackage[outputdir=../]{minted}
+
+\addbibresource{latex/custom.bib}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\DeclareUnicodeCharacter{2212}{-}
+
+
+\begin{document}
+\begin{titlepage}
+   \begin{center}
+       \includegraphics[scale = 0.13]{images/ITU_logo_UK.jpg}
+       \vspace*{1cm}
+
+       \textbf{\LARGE Large Scale Data Analysis Exam}
+
+       \vspace{0.3cm}
+       \text{BSLASDA1KU} \\
+            
+       \vspace{2.0cm}
+       \text{Alexander Thoren} \\
+       \text{Student No.: 21381} \\
+       \text{\href{mailto:alct@itu.dk}{alct@itu.dk}} \\
+       
+       \vspace{2.5cm}
+       \noindent\fbox{%
+    \parbox{\textwidth}{%
+    \textit{I hereby declare that I have answered these exam questions myself without any outside help.}
+    \vspace{0.25cm}
+    \\
+    \noindent\begin{minipage}[t]{0.48\textwidth}
+    \textit{Alexander Christian Thoren}
+    \end{minipage}%
+    \hfill%
+    \begin{minipage}[t]{0.48\textwidth}
+    \raggedleft \textit{29/05/2024}
+    \end{minipage}
+}%
+}
+
+       \vspace{2.5cm}
+       \text{BSc in Data Science} \\
+       \text{IT University of Copenhagen} \\
+       \text{May, 2024} \\
+   \end{center}
+\end{titlepage}
+
+\section{Scalable data processing}
+\subfile{partA}
+
+\section{ML lifecycle}
+\subfile{partB}
+
+\section{Lecture material}
+\subfile{partC}
+
+\section{Bonus Question}
+
+A topic that I have become very interested, especially since the lecture about is, is Docker and containerization. Docker is a system for defining all dependencies in a single file, from the operating systems, to installed programs to libraries and files. This allows for extremely simple and reliable deployments, making heavy use of the "Write once, run anywhere" paradigm. Once a configuration for a docker container has been written, it can be clones and deployed on virtually any machine across the globe with no issues. If used properly, this makes it easy to make use of distributed or edge computing.
+
+Normally, Docker containers are very light-weight if deployed on the right operating system, but this also means that they are usually missing a lot of the programs required by most applications. Since Docker images can be built from other Docker images, this allows for easily expandable applications, which means a developer does not necessarily need to build or install all of their own dependencies - another user may have already done so, and released it as a standalone Docker image. Since Docker images are also version controlled with Tags, this means reproducibility is not lost when creating containers that rely on preexisting Docker images.
+
+All of this makes Docker containers great solutions for reproducibility, ease of deployment and ease of distribution. When variables can be isolated due to containerization, it makes debugging and bug fixing significantly easier.
+
+\printbibliography
+
+\end{document}

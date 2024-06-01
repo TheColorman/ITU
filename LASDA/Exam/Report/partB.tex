@@ -1,0 +1,127 @@
+This section revolves around machine learning using MLflow.
+
+\subsection{Data Alignment}
+
+The goal of this assignment was predicting renewable energy generation based on wind forecast data. I had access to two datasets, a time series tracking energy generation and a time series tracking wind speed and direction. See Table \ref{table:data} for a schema over the two datasets. This data was imported in the form of two Pandas (\cite{reback2020pandas}, \cite{mckinney-proc-scipy-2010}) DataFrames. 
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{lll}
+    \hline
+    \multicolumn{3}{l}{Renewable Energy Generation}           \\
+Key     & Type  & Description                             \\ \hline
+time    & float & Time of measurement                     \\
+ANM     & float & Not relevant                            \\
+Non-ANM & float & Not relevant                            \\
+Total   & float & Renewable power generation in MegaWatts \\ \hline
+    \end{tabular}
+    \begin{tabular}{lll}
+    \multicolumn{3}{l}{Weather Forecasts}           \\
+Key     & Type  & Description                             \\ \hline
+time    & float & Target time of forecasts                     \\
+Speed     & float & Wind speed in M/S                            \\
+Direction & string & Wind direction, e.g. "S" or "NW"                            \\
+Source\_time   & integer & Time of forecast generation \\ \hline
+Lead\_hours   & string & Forecast horizon in hours \\ \hline
+    \end{tabular}
+    \caption{Schema over datasets}
+    \label{table:data}
+\end{table}
+
+The first step involved joining the two dataset into a single DataFrame. This was quite tricky as the datasets measurements intervals. The Weather Forecast dataset was measured on intervals of 3 hours while the Power Generation dataset was measured on intervals of 1 minute. Simply performing an inner join would discard 59/60 of the data. I therefore decided to fill in the gaps in the Forecast data for each datapoint in the Power Generation dataset. This was done by finding the two closest Forecast datapoints to each Power Generation datapoint. That is, for a Power Generation datapoint from 13:41:00, the two closest Forecast datapoints would be at 12:00:00 and at 15:00:00. Data for these two Forecast datapoints were then averaged, except wind direction, where the closest Forecast was used:
+
+\begin{minted}{python}
+def wind_average(closest, before, after):
+    direction = closest['Direction']
+    lead_hours = (int(before['Lead_hours']) + int(after['Lead_hours'])) / 2
+    source_time = (int(before['Source_time']) + int(after['Source_time'])) / 2
+    speed = (int(before['Speed']) + int(after['Speed'])) / 2
+    return direction, lead_hours, source_time, speed
+\end{minted}
+
+The calculated vales were then used to fill new \texttt{Direction}, \texttt{Lead\_hours}, \texttt{Source\_time} and \texttt{Speed} columns. Most adjacent Forecast datapoints are very similar as the wind changes very gradually, and thus, averaging is a good approximation for the true Forecast at each Power Generation interval.
+
+\begin{minted}{python}
+power_df['Direction'] = [None] * len(power_df)
+power_df['Lead_hours'] = [None] * len(power_df)
+power_df['Source_time'] = [None] * len(power_df)
+power_df['Speed'] = [None] * len(power_df)
+
+for index, row in power_df.iterrows():
+    time = index
+    # Find the wind_df times that surround this power row
+    closest_two = wind_df.iloc[
+        abs((wind_df.index - time).total_seconds()).argsort()[:2]
+    ]
+    closest = closest_two.iloc[0]
+    before, after = list(closest_two.sort_index().iterrows())
+    # if time > after, then this power observation is newer than any wind observation
+    # in that case, only use after, the newest one.
+    if time > after[0]:
+        before = after
+
+    direction, lead_hours, source_time, speed = wind_average(
+        closest, before[1], after[1]
+    )
+    power_df.at[index, 'Direction'] = direction
+    power_df.at[index, 'Lead_hours'] = lead_hours
+    power_df.at[index, 'Source_time'] = source_time
+    power_df.at[index, 'Speed'] = speed
+\end{minted}
+
+This method ensured that every datapoint remained in use by estimating missing data. An issue with this approach however, is that it is still not a perfect estimate. This method causes every Power Generation datapoint between two Forecast datapoints to have the exact same Forecast values. That is, a Power Generation datapoint at 13:30:00 and one at 14:54:00 would both use an average of the Forecast datapoints at 12:00:00 and 15:00:00. This causes a lot of data to be identical. A potential technique to help address this issue may be to use a weighted average instead, where the weight is determined by the closeness of each Forecast datapoint to the specific Power Generation datapoint. This would ensure that every Power Generation datapoint has different data for their Weather Forecast information.
+
+\subsection{Feature Transformation}
+
+Before training an actual machine learning model on the data, it is important to do perform feature engineering techniques such as feature transformation. A good candidate for this is the Direction property. This property encodes the direction wind from in a given Forecast is coming from. Since this property is given as a string, it cannot be used for most machine learning algorithms as they rely on doing calculations with numbers. The property therefore needs to be transformed into a number, and to do so I applied One Hot Encoding, also known as converting properties to Dummy Variables. This is a technique applied to categorical variables, that turns a variable of $n$ possible categories into $n-1$ different boolean features. When applied to the Direction property, this technique would create a new column for each direction except one. The column with a value of 1 for a specific datapoint then corresponds to the wind direction. This is very easy to do with Pandas DataFrames, as Pandas contains a method, \texttt{get\_dummies}, that takes a DataFrame and converts specified columns into Dummy Variables:
+
+\begin{minted}{python}
+>>> joined_encoded = pd.get_dummies(power_df, columns=['Direction'])
+>>> direction_columns = [c for c in joined_encoded.columns if 'Direction' in c]
+>>> direction_columns
+['Direction_E',  'Direction_ENE', 'Direction_ESE', 'Direction_N',
+ 'Direction_NE', 'Direction_NNE', 'Direction_NNW', 'Direction_NW',
+ 'Direction_S',  'Direction_SE',  'Direction_SSE', 'Direction_SSW',
+ 'Direction_SW', 'Direction_W',   'Direction_WNW', 'Direction_WSW']
+\end{minted}
+
+This removes the original Direction column, and leaves a new column for each original category, which in this case is 16 new columns. Each column is a boolean, either True or False, and each row can only have a single Direction column be True at a time. This allows a machine learning model to adopt each of directional column as a different feature, applying different weights to each wind direction.
+
+\subsection{Data Drift}
+
+Data drift is an important problem one needs to keep in mind when deploying machine learning models to a production environment. Data drift refers to when the distribution of the dataset changes, or 'drifts', in some way over time, whether it be the features, the labels or the response variable. This can be quite a common problem as trends tend to come and go, and data available at the point of a models training may be different from the data encountered after model deployment.
+
+An example of this in practice could be changes in equipment. Wind turbines, transmission lines and transformers can all loose performance if not taken care of, or their performance can increase as they are upgraded or more turbines are added. Since the model is trained on recent data covering the entire electricity generation of the Orkney power grid, any of the changes mentioned would negatively impact the predictive power of the machine learning model. For example, installing additional wind turbines would cause power production to increase, with no change in the actual weather forecasts. This is known as Label Shift, where the response variable changes without the predictor variables being affected.
+
+To mitigate data drift, the power generation prediction model has been trained in an easily reusable pipeline format on recent data automatically gathered. This makes it exceedingly simple to retrain the model as the circumstances regarding the data collection change, as the only step required to update the model to one trained on the newest data is simply to execute the training script.
+
+\subsection{Hyperparameter Optimisation}
+
+To predict the power generation from the weather forecast, I decided to go with a more complex machine learning model, that is, a feed-forward neural network. I went with a neural network due to the impressive results neural networks have shown, but also due to the fact that they have a lot of tunable hyperparameters, which allowed me to explore how MLflow keeps track of model parameters during trials.
+
+A neural network is at its core, a collection of many different linear models separated by non-linear functions called activation functions. The combination of a linear model and an activation function is called a neuron. Each input feature is passed as a parameter to $k$ different linear models, along with all other input features. This is known as a hidden layer. The output from each linear model is then passed to an activation function that makes some non-linear operation on its input value. This is usually taken to be ReLU which can be expressed in Python as \mintinline{python}{lambda x: max(0, x)}, effectively clamping the lowest value to 0. This output is passed along, either to another hidden layer of the same or a different size, or to an output layer. The output layer contains a linear and an activation function for each response variable.
+
+In my case, I decided to make the size and number of hidden layers each a hyperparameter, with each hidden layer being the same size. The output layer had a single neuron, predicting the megawatts of power generation based on the input features. Additionally, I included a dropout layer after every hidden layer. A dropout layer is a training method that artificially sets the output for some neurons to 0 in the layer preceding it, forcing the next layer to optimize the information gain from each input. The fraction of neurons disabled by the dropout layers was also included as a hyperparameter. The final two hyperparameters were related to the actual model training. These were the learning rate and the number of epochs. Each epoch is a single pass of infering on a set of data, evaluating the result and optimizing the weights for the model. The learning rate is how much the weights are optimized for each epoch.
+
+This left me with 6 hyperparameters that I used Optuna (\cite{optuna_2019}) to optimize for each trial. I used the Mean Squared Error for the evaluation metric as it is a good indicator of error in regression tasks, as it weighs larger errors more. After 2500 trials, the best MSE was 26.6. See Table \ref{table:mlresultselectricboogaloo} for an overview over the hyperparameters for the top 3 models.
+
+\begin{table}[]
+\begin{tabular}{l|lllll}
+\hline
+MSE    & Dropout & Epochs & Hidden layers & Hidden neurons & Learning rate \\ \hline
+26.576 & 0.40589 & 89     & 3             & 93             & 0.0055492     \\
+26.751 & 0.42559 & 77     & 3             & 94             & 0.0049576     \\
+27.043 & 0.40451 & 78     & 3             & 94             & 0.0064252     \\ \hline
+\end{tabular}
+    \caption{Top 3 models from optimizing using Optuna and tracking using MLflow}
+    \label{table:mlresultselectricboogaloo}
+\end{table}
+
+
+\subsection{Reproducibility}
+
+Reproducibility has become an increasing problem in the academic world, to the point that it is considered a crisis today (\cite{Baker2016}). It's therefore very important that any new research and new machine learning models are reproducible. This means that someone reading the about a machine learning model should be able to effectively locally train a model that is a reproduction of the original model.
+
+When training machine learning models using Python, there are several different ways to ensure reproducibility at various levels. The most important element to reproducibility in this scenario is access to the code used to train the model. This can either be through an artifact, a feature provided by libraries like MLflow, or through a public version control system like Git, which allows users to view source code at every iteration. When dynamically determining hyperparameters of models like done in this project, it is also important to make the final chosen hyperparameters public. Usually papers and reports shorten long floating point numbers, so figures from such sources are usually not reliable. Training data should also be provided to users seeking to replicate an experiment. This may not always be possible if training data is private or sensitive in nature, but in scenarios where this is not the case, such data should be provided. Finally, dependencies and their versions should be made clear. This is for Python libraries used, which can be specified in a \texttt{requirements.txt} file, or using a library like MLflow, but also extends to larger dependencies like the operating system and system architecture. These can be encapsulated in larger virtualization systems like Containerization using Docker or Podman, or full Virtual Machines using tools like Proxmox.
+
+This project aids reproducibility in a few ways, mainly relying on MLflow. The code for the project is available through GitHub, a provider of servers for Git projects, where it can be copied and reused. In this project, the data is dynamically fetched from a data source every time the script is ran. This means it is important for the training data to be available for each version of the model. MLflow is used to save both the model hyperparameters as well as the model training data as an artifact. This ensures that, as the data changes in the future, old versions of the training data will always be available for users to verify and compare. Finally, I have included both a \texttt{requirements.txt} file specifying all used Python dependencies and their versions, as well as \texttt{docker-compose.yaml} file for automated model training using a Docker container for optimal reproducibility.
