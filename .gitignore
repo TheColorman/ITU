@@ -2,3 +2,5 @@
 INDBS/7
 *.bin
 langid-data/
+
+**/.direnv
