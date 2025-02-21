@@ -1,0 +1,6 @@
+[submodule "ALPRS/lectures"]
+	path = ALPRS/lectures
+	url = https://github.itu.dk/algorithms/aps-25.git
+[submodule "ALPRS/Week04/circles"]
+	path = ALPRS/Week04/circles
+	url = https://github.com/sumrdev/circles
