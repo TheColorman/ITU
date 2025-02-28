@@ -8,10 +8,12 @@
   outputs = { nixpkgs, ... }: let
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
-    python = pkgs.python313.withPackages (p: with p; [ ruff numpy ]);
+    py = pkgs.python313.withPackages (p: with p; [ ruff numpy ]);
   in {
     devShells.x86_64-linux.default = pkgs.mkShellNoCC {
-      packages = [ python ];
+      packages = [ py ] ++ (with pkgs; [
+        basedpyright
+      ]);
     };
   };
 }
