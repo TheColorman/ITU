@@ -4,3 +4,5 @@ INDBS/7
 langid-data/
 
 **/.direnv
+
+**/__pycache__
